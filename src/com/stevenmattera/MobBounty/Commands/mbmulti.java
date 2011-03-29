@@ -20,10 +20,10 @@ public class mbmulti implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (_plugin.Permissions != null && _plugin.Permissions.has((Player) sender, "MobBounty.mbmulti")) {
-			this.mbmultiCommand(sender, args);
+			this.mbmultiCommand(sender, label, args);
 		}
 		else if (_plugin.Permissions == null && sender.isOp()) {
-			this.mbmultiCommand(sender, args);
+			this.mbmultiCommand(sender, label, args);
 		}
 		else {
 			sender.sendMessage(Colors.Red+"You do no have access to that command.");
@@ -32,7 +32,7 @@ public class mbmulti implements CommandExecutor {
 		return true;
 	}
 	
-	private void mbmultiCommand(CommandSender sender, String[] args) {
+	private void mbmultiCommand(CommandSender sender, String label, String[] args) {
 		if (args.length == 2) {
 			if (args[1].matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")) {
 				Double amount = Double.parseDouble(args[1]);
@@ -42,6 +42,7 @@ public class mbmulti implements CommandExecutor {
 					
 					if (world != null) {
 						_plugin.getConfig().setWorldMultiplier(world.getName(), amount);
+						sender.sendMessage(Colors.DarkGreen+"World \""+Colors.White+args[0]+Colors.DarkGreen+"\" has been changed to multiply by: "+Colors.White+amount);
 					}
 					else {
 						sender.sendMessage(Colors.Red+"Unknown world \""+Colors.White+args[0]+Colors.Red+"\".");				
@@ -53,7 +54,7 @@ public class mbmulti implements CommandExecutor {
 			}
 		}
 		else {
-			sender.sendMessage(Colors.Red+"Usage: /mbmulti <world> <amount>");
+			sender.sendMessage(Colors.Red+"Usage: /"+label+" <world> <amount>");
 		}
 	}
 }

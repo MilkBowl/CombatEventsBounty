@@ -11,6 +11,10 @@ commands:
   mbreward:
     description: Modify reward amount per mob.
     usage: /<command> <mob> <amount>
+    aliases:
+      - mbr
   mbmulti:
     description: Modify multiplication amount per world.
     usage: /<command> <world> <amount>
+    aliases:
+      - mbm

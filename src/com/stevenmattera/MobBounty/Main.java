@@ -16,7 +16,11 @@ import com.stevenmattera.MobBounty.Listeners.PluginListener;
 
 public class Main extends JavaPlugin {
 	private final DeathListener _deathListener = new DeathListener(this);
-	private final PluginListener _pluginListener =new PluginListener(this);
+	private final PluginListener _pluginListener = new PluginListener(this);
+	
+	private final mb _mb = new mb(this);
+	private final mbmulti _mbmulti = new mbmulti(this);
+	private final mbreward _mbreward = new mbreward(this);
 	
 	private final Logger _logger = Logger.getLogger("Minecraft");
 
@@ -36,9 +40,9 @@ public class Main extends JavaPlugin {
 		
 		_config = new Config(this);
 		
-		getCommand("mb").setExecutor(new mb(this));
-		getCommand("mbmulti").setExecutor(new mbmulti(this));
-		getCommand("mbreward").setExecutor(new mbreward(this));
+		getCommand("mb").setExecutor(_mb);
+		getCommand("mbmulti").setExecutor(_mbmulti);
+		getCommand("mbreward").setExecutor(_mbreward);
 		
 		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DAMAGED, _deathListener, Priority.Monitor, this);
 		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DEATH, _deathListener, Priority.Monitor, this);

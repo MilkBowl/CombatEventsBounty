@@ -20,10 +20,10 @@ public class mbreward implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (_plugin.Permissions != null && _plugin.Permissions.has((Player) sender, "MobBounty.mbreward")) {
-			this.mbrewardCommand(sender, args);
+			this.mbrewardCommand(sender, label, args);
 		}
 		else if (_plugin.Permissions == null && sender.isOp()) {
-			this.mbrewardCommand(sender, args);
+			this.mbrewardCommand(sender, label, args);
 		}
 		else {
 			sender.sendMessage(Colors.Red+"You do no have access to that command.");
@@ -32,7 +32,7 @@ public class mbreward implements CommandExecutor {
 		return true;
 	}
 
-	private void mbrewardCommand(CommandSender sender, String[] args) {
+	private void mbrewardCommand(CommandSender sender, String label, String[] args) {
 		if (args.length == 2) {
 			if (args[1].matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")) {
 				Double amount = Double.parseDouble(args[1]);
@@ -99,7 +99,7 @@ public class mbreward implements CommandExecutor {
 			}		
 		}
 		else {
-			sender.sendMessage(Colors.Red+"Usage: /mbreward <mob> <amount>");
+			sender.sendMessage(Colors.Red+"Usage: /"+label+" <mob> <amount>");
 		}
 	}
 }
