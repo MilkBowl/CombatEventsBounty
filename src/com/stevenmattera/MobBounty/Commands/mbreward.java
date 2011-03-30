@@ -1,3 +1,8 @@
+// MobBounty
+// Version 1.0
+//
+// Created By Steven Mattera
+
 package com.stevenmattera.MobBounty.Commands;
 
 import org.bukkit.command.Command;
@@ -9,14 +14,21 @@ import org.bukkit.entity.Player;
 import com.stevenmattera.MobBounty.Main;
 import com.stevenmattera.MobBounty.Utils.Colors;
 
-
 public class mbreward implements CommandExecutor {
 	private final Main _plugin;
+	
+	// ----
+	// ==== Constructor Methods ====
+	// ----
 	
 	public mbreward(Main plugin) {
 		_plugin = plugin;
 	}
 
+	// ----
+	// ==== CommandExecutor Methods ====
+	// ----
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (_plugin.Permissions != null && _plugin.Permissions.has((Player) sender, "MobBounty.mbreward")) {
@@ -32,6 +44,10 @@ public class mbreward implements CommandExecutor {
 		return true;
 	}
 
+	// ----
+	// ==== Private Methods ====
+	// ----
+	
 	private void mbrewardCommand(CommandSender sender, String label, String[] args) {
 		if (args.length == 2) {
 			if (args[1].matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")) {

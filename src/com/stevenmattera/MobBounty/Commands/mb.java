@@ -1,3 +1,8 @@
+// MobBounty
+// Version 1.0
+//
+// Created By Steven Mattera
+
 package com.stevenmattera.MobBounty.Commands;
 
 import org.bukkit.command.Command;
@@ -13,9 +18,17 @@ import com.stevenmattera.MobBounty.Utils.Colors;
 public class mb implements CommandExecutor {
 	private final Main _plugin;
 	
+	// ----
+	// ==== Constructor Method ====
+	// ----
+	
 	public mb(Main plugin) {
 		_plugin = plugin;
 	}
+	
+	// ----
+	// ==== CommandExecutor Methods ====
+	// ----
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -31,6 +44,10 @@ public class mb implements CommandExecutor {
 		
 		return true;
 	}
+	
+	// ----
+	// ==== Private Methods ====
+	// ----
 	
 	private void mbCommand(CommandSender sender) {
 		double multiplier = _plugin.getConfig().getWorldMultiplier(((Player) sender).getWorld());

@@ -1,3 +1,8 @@
+// MobBounty
+// Version 1.0
+//
+// Created By Steven Mattera
+
 package com.stevenmattera.MobBounty.Listeners;
 
 import org.bukkit.event.server.PluginEvent;
@@ -11,9 +16,17 @@ import com.stevenmattera.MobBounty.Main;
 public class PluginListener extends ServerListener {
 	private static Main _plugin = null;
 	
+	// ----
+	// ==== Constructor Method ====
+	// ----
+	
 	public PluginListener(Main plugin) {
 		if (_plugin == null) _plugin = plugin;
 	}
+	
+	// ----
+	// ==== Public Method ====
+	// ----
 	
 	public void onPluginEnabled(PluginEvent event) {
 		if (_plugin != null) {

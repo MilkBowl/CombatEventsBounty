@@ -1,3 +1,8 @@
+// MobBounty
+// Version 1.0
+//
+// Created By Steven Mattera
+
 package com.stevenmattera.MobBounty.Listeners;
 
 import java.util.HashMap;

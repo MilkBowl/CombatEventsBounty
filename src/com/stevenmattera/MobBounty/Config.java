@@ -1,3 +1,8 @@
+// MobBounty
+// Version 1.0
+//
+// Created By Steven Mattera
+
 package com.stevenmattera.MobBounty;
 
 import java.io.File;
@@ -33,6 +38,10 @@ public class Config {
 	private Map<String, Double> _worldMultiplier = null;
 	private Map<String, Double> _rewards = null;
 	
+	// ----
+	// ==== Constructor Method ====
+	// ----
+	
 	public Config(Main plugin) {
 		if (_plugin == null) _plugin = plugin;
 		
@@ -45,6 +54,10 @@ public class Config {
 		if (!_configFile.exists())	this.createConfig();
 		else						this.loadConfig();
 	}
+	
+	// ----
+	// ==== Private Methods ====
+	// ----
 	
 	private void createConfig() {
 		if (_config != null) {
@@ -107,6 +120,10 @@ public class Config {
 			this.saveConfig();
 		}
 	}
+	
+	// ----
+	// ==== Public Methods ====
+	// ----
 	
 	public void loadConfig() {
 		if (_config != null) {
