@@ -65,7 +65,7 @@ public class DeathListener extends EntityListener {
 	public void onEntityDamage(EntityDamageEvent event) {
 		if (_plugin.iConomy != null) {																			//Was iConomy hooked?
 			if (!(event.isCancelled())) {																			//Was this event cancelled?
-				if (!(event.getEntity() instanceof Player)) {															//Was it something other than a player that was damaged.
+				if (event.getEntity() instanceof LivingEntity && !(event.getEntity() instanceof Player)) {															//Was it something other than a player that was damaged.
 					LivingEntity entity = (LivingEntity) event.getEntity();													//Grab our LivingEntity that was damaged.
 
 					if (entity.getHealth() - event.getDamage() <= 0) {														//Was the damage fatal?
