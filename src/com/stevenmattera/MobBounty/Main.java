@@ -1,5 +1,5 @@
 // MobBounty
-// Version 1.0
+// Version 1.01
 //
 // Created By Steven Mattera
 
@@ -9,10 +9,12 @@ import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 import com.stevenmattera.MobBounty.Commands.mb;
 import com.stevenmattera.MobBounty.Commands.mbmulti;
 import com.stevenmattera.MobBounty.Commands.mbreward;
@@ -49,9 +51,33 @@ public class Main extends JavaPlugin {
 		getCommand("mbmulti").setExecutor(_mbmulti);
 		getCommand("mbreward").setExecutor(_mbreward);
 		
-		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DAMAGED, _deathListener, Priority.Monitor, this);
+		if (iConomy == null) {
+			Plugin iConomyPlugin = this.getServer().getPluginManager().getPlugin("iConomy");
+		
+			if (iConomyPlugin != null) {
+				if (iConomyPlugin.isEnabled()) {
+					iConomy = (iConomy) iConomyPlugin;
+					this.getLogger().info("[MobBounty] hooked into iConomy.");
+				}
+			}
+		}
+		
+		if (Permissions == null) {
+			Plugin PermissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
+			
+			if (PermissionsPlugin != null) {
+				if (PermissionsPlugin.isEnabled()) {
+					Permissions = ((Permissions) PermissionsPlugin).getHandler();
+					this.getLogger().info("[MobBounty] hooked into Permissions/GroupManager.");
+				}
+			}
+		}
+		
+		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DAMAGE, _deathListener, Priority.Monitor, this);
 		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DEATH, _deathListener, Priority.Monitor, this);
-		this.getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, _pluginListener, Priority.Monitor, this);
+
+		if (iConomy == null || Permissions == null)
+			this.getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, _pluginListener, Priority.Monitor, this);
 	}
 
 	@Override

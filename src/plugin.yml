@@ -1,6 +1,6 @@
 name: MobBounty
 main: com.stevenmattera.MobBounty.Main
-version: 1.00
+version: 1.01
 website: http://stevenmattera.com
 author: Steven Mattera
 description: Simple plugin for iConomy that pays players for killing mobs.
