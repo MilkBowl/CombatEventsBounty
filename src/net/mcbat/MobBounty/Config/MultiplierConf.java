@@ -48,6 +48,8 @@ public class MultiplierConf {
 		timeMultiplier.put(Time.Night, new Double(2.0));
 		timeMultiplier.put(Time.Sunrise, new Double(1.0));
 		
+		worldMultiplier = new HashMap<String, Double>();
+		
 		this.saveConfig();
 	}
 	
