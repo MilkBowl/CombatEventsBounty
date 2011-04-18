@@ -1,20 +1,54 @@
 name: MobBounty
-main: com.stevenmattera.MobBounty.Main
-version: 1.02
-website: http://stevenmattera.com
+main: net.mcbat.MobBounty.Main
+version: 2.00
+website: http://mc-bat.net
 author: Steven Mattera
-description: Simple plugin for iConomy that pays players for killing mobs.
+description: Simple plugin for iConomy that pays/fines players for killing mobs.
 commands:
   mb:
-    description: View rewards.
+    description: View rewards and fines.
     usage: /<command>
-  mbreward:
-    description: Modify reward amount per mob.
+    alias:
+      - mobbounty
+  mbg:
+    description: Modify the general settings.
+    usage: /<command> <property> <value>
+    alias:
+      - mbgeneral
+  mbr:
+    description: Modify the default reward/fine of a mob.
     usage: /<command> <mob> <amount>
-    aliases:
-      - mbr
-  mbmulti:
-    description: Modify multiplication amount per world.
+    alias:
+      - mbreward
+  mbwr:
+    description: Modify reward/fine of a mob in a world.
+    usage: /<command> <world> <mob> <amount>
+    alias:
+      - mbworldreward
+  mbem:
+    description: Modify multiplier per environment.
+    usage: /<command> <normal|nether> <amount>
+    alias:
+      - mbenvmulti
+  mbtm:
+    description: Modify multiplier per time.
+    usage: /<command> <day|sunset|night|sunrise> <amount>
+    alias:
+      - mbtimemulti
+  mbwm:
+    description: Modify multiplier per world.
     usage: /<command> <world> <amount>
-    aliases:
-      - mbm
+    alias:
+      - mbworldmulti
+  mbs:
+    description: Save the config files.
+    usage: /<command>
+    alias:
+      - mbsave
+  mbl:
+    description: Load the config files.
+    usage: /<command>
+    alias:
+      - mbload
+depend:
+  - iConomy
