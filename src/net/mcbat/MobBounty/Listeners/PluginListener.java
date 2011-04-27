@@ -16,7 +16,7 @@ public class PluginListener extends ServerListener {
 		if (_plugin == null) _plugin = plugin;
 	}
 	
-	public void onPluginEnabled(PluginEnableEvent event) {
+	public void onPluginEnable(PluginEnableEvent event) {
 		if (_plugin != null) {
 			if (_plugin.iConomy == null) {
 				Plugin iConomy = _plugin.getServer().getPluginManager().getPlugin("iConomy");
