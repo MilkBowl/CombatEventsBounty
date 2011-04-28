@@ -7,7 +7,6 @@ import net.mcbat.MobBounty.Utils.CreatureID;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 public class mbr implements CommandExecutor {
@@ -32,7 +31,7 @@ public class mbr implements CommandExecutor {
 	private void mbrCommand(CommandSender sender, String command, String[] args) {
 		if (args.length == 2) {
 			if (args[1].matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")) {
-				CreatureType mob = CreatureID.identifyCreatureByName(args[0]);
+				CreatureID mob = CreatureID.fromName(args[0]);
 			
 				if (mob != null) {
 					Double amount = Double.parseDouble(args[1]);
@@ -51,6 +50,6 @@ public class mbr implements CommandExecutor {
 	
 	private void commandUsage(CommandSender sender, String command) {
 		sender.sendMessage(Colors.Red+"Usage: /"+command+" [mob] <amount>");
-		sender.sendMessage(Colors.Gray+"Mobs: Zombie PigZombie Skeleton Slime Chicken Pig Monster Spider Creeper Ghast Squid Giant Cow Sheep Wolf");
+		sender.sendMessage(Colors.Gray+"Mobs: Zombie PigZombie Skeleton Slime Chicken Pig Monster Spider Creeper ElectrifiedCreeper Ghast Squid Giant Cow Sheep Wolf TamedWolf");
 	}
 }

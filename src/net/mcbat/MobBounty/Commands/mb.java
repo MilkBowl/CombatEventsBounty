@@ -2,13 +2,13 @@ package net.mcbat.MobBounty.Commands;
 
 import net.mcbat.MobBounty.Main;
 import net.mcbat.MobBounty.Utils.Colors;
+import net.mcbat.MobBounty.Utils.CreatureID;
 import net.mcbat.MobBounty.Utils.Time;
 
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 import com.nijiko.coelho.iConomy.iConomy;
@@ -48,7 +48,7 @@ public class mb implements CommandExecutor {
 		if (_plugin.getConfig().getGeneralSetting("useWorldMultiplier"))
 			multiplier *= _plugin.getConfig().getWorldMultiplier(world.getName());
 		
-		for (CreatureType creature : CreatureType.values()) {
+		for (CreatureID creature : CreatureID.values()) {
 			double reward = _plugin.getConfig().getReward(world.getName(), creature) * multiplier;
 			
 			if (reward > 0.0)

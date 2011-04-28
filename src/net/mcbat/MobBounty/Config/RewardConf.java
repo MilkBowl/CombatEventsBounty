@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.Utils.CreatureID;
 
 import org.bukkit.World;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.util.config.Configuration;
 
 public class RewardConf {
@@ -18,8 +18,8 @@ public class RewardConf {
 	private final File _rewardConfigFile;
 	private Configuration rewardConfig;
 	
-	private Map<CreatureType, Double> defaultReward;
-	private Map<String, Map<CreatureType, Double>> worldReward;
+	private Map<CreatureID, Double> defaultReward;
+	private Map<String, Map<CreatureID, Double>> worldReward;
 	
 	public RewardConf(Main plugin) {
 		_plugin = plugin;
@@ -32,6 +32,7 @@ public class RewardConf {
 		rewardConfig.setProperty("Default.Chicken", new Double(0.0));
 		rewardConfig.setProperty("Default.Cow", new Double(0.0));
 		rewardConfig.setProperty("Default.Creeper", new Double(57.0));
+		rewardConfig.setProperty("Default.ElectrifiedCreeper", new Double(69.0));
 		rewardConfig.setProperty("Default.Ghast", new Double(69.0));
 		rewardConfig.setProperty("Default.Pig", new Double(0.0));
 		rewardConfig.setProperty("Default.PigZombie", new Double(28.5));
@@ -41,24 +42,27 @@ public class RewardConf {
 		rewardConfig.setProperty("Default.Spider", new Double(28.5));
 		rewardConfig.setProperty("Default.Squid", new Double(0.0));
 		rewardConfig.setProperty("Default.Wolf", new Double(28.5));
+		rewardConfig.setProperty("Default.TamedWolf", new Double(0.0));
 		rewardConfig.setProperty("Default.Zombie", new Double(21.0));
 		
-		defaultReward = new HashMap<CreatureType, Double>();
-		defaultReward.put(CreatureType.CHICKEN, new Double(0.0));
-		defaultReward.put(CreatureType.COW, new Double(0.0));
-		defaultReward.put(CreatureType.CREEPER, new Double(57.0));
-		defaultReward.put(CreatureType.GHAST, new Double(69.0));
-		defaultReward.put(CreatureType.PIG, new Double(0.0));
-		defaultReward.put(CreatureType.PIG_ZOMBIE, new Double(28.5));
-		defaultReward.put(CreatureType.SHEEP, new Double(0.0));
-		defaultReward.put(CreatureType.SKELETON, new Double(33.0));
-		defaultReward.put(CreatureType.SLIME, new Double(0.0));
-		defaultReward.put(CreatureType.SPIDER, new Double(28.5));
-		defaultReward.put(CreatureType.SQUID, new Double(0.0));
-		defaultReward.put(CreatureType.WOLF, new Double(28.5));
-		defaultReward.put(CreatureType.ZOMBIE, new Double(21.0));
+		defaultReward = new HashMap<CreatureID, Double>();
+		defaultReward.put(CreatureID.CHICKEN, new Double(0.0));
+		defaultReward.put(CreatureID.COW, new Double(0.0));
+		defaultReward.put(CreatureID.CREEPER, new Double(57.0));
+		defaultReward.put(CreatureID.ELECTRIFIED_CREEPER, new Double(69.0));
+		defaultReward.put(CreatureID.GHAST, new Double(69.0));
+		defaultReward.put(CreatureID.PIG, new Double(0.0));
+		defaultReward.put(CreatureID.PIG_ZOMBIE, new Double(28.5));
+		defaultReward.put(CreatureID.SHEEP, new Double(0.0));
+		defaultReward.put(CreatureID.SKELETON, new Double(33.0));
+		defaultReward.put(CreatureID.SLIME, new Double(0.0));
+		defaultReward.put(CreatureID.SPIDER, new Double(28.5));
+		defaultReward.put(CreatureID.SQUID, new Double(0.0));
+		defaultReward.put(CreatureID.WOLF, new Double(28.5));
+		defaultReward.put(CreatureID.TAMED_WOLF, new Double(0.0));
+		defaultReward.put(CreatureID.ZOMBIE, new Double(21.0));
 		
-		worldReward = new HashMap<String, Map<CreatureType, Double>>();
+		worldReward = new HashMap<String, Map<CreatureID, Double>>();
 
 		this.saveConfig();
 	}
@@ -71,18 +75,18 @@ public class RewardConf {
 			rewardConfig = new Configuration(_rewardConfigFile);
 			rewardConfig.load();
 			
-			defaultReward = new HashMap<CreatureType, Double>();
-			for (CreatureType creature : CreatureType.values()) {
+			defaultReward = new HashMap<CreatureID, Double>();
+			for (CreatureID creature : CreatureID.values()) {
 				defaultReward.put(creature, rewardConfig.getDouble("Default."+creature.getName(), 0.0));
 			}
 			
-			worldReward = new HashMap<String, Map<CreatureType, Double>>();
+			worldReward = new HashMap<String, Map<CreatureID, Double>>();
 			while (worldIterator.hasNext()) {
 				World world = worldIterator.next();
 				
-				Map<CreatureType, Double> thisWorldReward = new HashMap<CreatureType, Double>();
+				Map<CreatureID, Double> thisWorldReward = new HashMap<CreatureID, Double>();
 				
-				for (CreatureType creature : CreatureType.values()) {
+				for (CreatureID creature : CreatureID.values()) {
 					double reward = rewardConfig.getDouble("Worlds."+world.getName()+"."+creature.getName(), -9001.0);
 					
 					if (reward != -9001) {
@@ -103,7 +107,7 @@ public class RewardConf {
 
 		while (worldIterator.hasNext()) {
 			World world = worldIterator.next();
-			for (CreatureType creature : CreatureType.values()) {
+			for (CreatureID creature : CreatureID.values()) {
 				if (rewardConfig.getDouble("Worlds."+world.getName()+"."+creature.getName(), -9001.0) == -9001.0)
 					rewardConfig.removeProperty("Worlds."+world.getName()+"."+creature.getName());
 			}
@@ -112,9 +116,9 @@ public class RewardConf {
 		rewardConfig.save();
 	}
 	
-	public double getReward(String name, CreatureType creature) {
+	public double getReward(String name, CreatureID creature) {
 		Double reward = new Double(0.0);
-		Map<CreatureType, Double> worldRwd = worldReward.get(name);
+		Map<CreatureID, Double> worldRwd = worldReward.get(name);
 		
 		if (worldRwd == null) {
 			reward = defaultReward.get(creature);
@@ -131,20 +135,20 @@ public class RewardConf {
 		return reward.doubleValue();
 	}
 	
-	public void setDefaultReward(CreatureType creature, double amount) {
+	public void setDefaultReward(CreatureID creature, double amount) {
 		rewardConfig.setProperty("Default."+creature.getName(), amount);
 		defaultReward.put(creature, new Double(amount));
 		
 		rewardConfig.save();
 	}
 	
-	public void setReward(String name, CreatureType creature, double amount) {
+	public void setReward(String name, CreatureID creature, double amount) {
 		rewardConfig.setProperty("Worlds."+name+"."+creature.getName(), amount);
 		
-		Map<CreatureType, Double> thisWorldReward = worldReward.get(name);
+		Map<CreatureID, Double> thisWorldReward = worldReward.get(name);
 		
 		if (thisWorldReward == null)
-			thisWorldReward = new HashMap<CreatureType, Double>();
+			thisWorldReward = new HashMap<CreatureID, Double>();
 		
 		thisWorldReward.put(creature, new Double(amount));
 		
@@ -153,10 +157,10 @@ public class RewardConf {
 		rewardConfig.save();
 	}
 	
-	public void removeReward(String name, CreatureType creature) {
+	public void removeReward(String name, CreatureID creature) {
 		rewardConfig.removeProperty("Worlds."+name+"."+creature.getName());
 		
-		Map<CreatureType, Double> worldRwd = worldReward.get(name);
+		Map<CreatureID, Double> worldRwd = worldReward.get(name);
 		
 		if (worldRwd != null) {
 			worldRwd.remove(creature);

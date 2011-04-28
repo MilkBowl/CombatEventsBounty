@@ -9,7 +9,6 @@ import net.mcbat.MobBounty.Utils.CreatureID;
 import net.mcbat.MobBounty.Utils.Time;
 
 import org.bukkit.World;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -27,9 +26,8 @@ public class DeathListener extends EntityListener {
 	private Map<LivingEntity, Player> _deathNote;
 		
 	public DeathListener(Main plugin) {
-		_plugin = plugin;																						//Save our Main Plugin to be used later.
-		
-		_deathNote = new HashMap<LivingEntity, Player>();																//Create our Death Note of KILLING!!!!
+		_plugin = plugin;
+		_deathNote = new HashMap<LivingEntity, Player>();
 	}
 	
 	public void onEntityDamage(EntityDamageEvent event) {
@@ -44,7 +42,7 @@ public class DeathListener extends EntityListener {
 		
 		LivingEntity entity = (LivingEntity) event.getEntity();
 		
-		if (CreatureID.identifyCreature(entity) == null)
+		if (CreatureID.fromEntity(entity) == null)
 			return;
 		
 		if (entity.getHealth() - event.getDamage() <= 0) {
@@ -58,14 +56,14 @@ public class DeathListener extends EntityListener {
 						_deathNote.put(entity, damager);
 				}
 			}
-			else if (event instanceof EntityDamageByProjectileEvent) {												//or was the damage dealt by a projectile?
-				EntityDamageByProjectileEvent subevent = (EntityDamageByProjectileEvent)event;							//Change our event type accordingly.
+			else if (event instanceof EntityDamageByProjectileEvent) {
+				EntityDamageByProjectileEvent subevent = (EntityDamageByProjectileEvent)event;
 
-				if (subevent.getDamager() instanceof Player) {															//Was it a player that wounded our mob?
+				if (subevent.getDamager() instanceof Player) {
 					Player damager = (Player) subevent.getDamager();
 					
 					if (_deathNote.get(entity) == null)
-						_deathNote.put(entity, damager);																//Add our mob to the Death Note to be killed by our player.
+						_deathNote.put(entity, damager);
 				}
 			}
 		}
@@ -80,37 +78,35 @@ public class DeathListener extends EntityListener {
 		
 		LivingEntity mob = (LivingEntity) event.getEntity();
 		Player player = _deathNote.get(mob);
-		
+
 		if (player != null) {
-			CreatureType creature = CreatureID.identifyCreature(mob);
-			
+			CreatureID creature = CreatureID.fromEntity(mob);
+
 			if (creature != null) {
-				this.mobKilledByPlayer(mob.getWorld(), CreatureID.identifyCreature(mob), player);
+				this.mobKilledByPlayer(mob.getWorld(), creature, player);
 				_deathNote.remove(mob);
 			}
 		}
 	}
 	
-	private void mobKilledByPlayer(World world, CreatureType creature, Player player) {
+	private void mobKilledByPlayer(World world, CreatureID creature, Player player) {
 		if (_plugin.iConomy == null)
 			return;
 		
 		if (_plugin.Permissions != null && !(_plugin.Permissions.has(player, "MobBounty.mb")))
 			return;
 
-		double reward = _plugin.getConfig().getReward(world.getName(), creature);
-				
-		if (reward != 0.0) {
-			double multiplier = 1.0;
-			if (_plugin.getConfig().getGeneralSetting("useEnvironmentMultiplier"))
-				multiplier *= _plugin.getConfig().getEnvironmentMultiplier(world.getEnvironment());
-			if (_plugin.getConfig().getGeneralSetting("useTimeMultiplier"))
-				multiplier *= _plugin.getConfig().getTimeMultiplier(Time.getTimeOfDay(world.getTime()));			
-			if (_plugin.getConfig().getGeneralSetting("useWorldMultiplier"))
-				multiplier *= _plugin.getConfig().getWorldMultiplier(world.getName());
-				
-			reward = reward*multiplier;
-					
+		double multiplier = 1.0;
+		if (_plugin.getConfig().getGeneralSetting("useEnvironmentMultiplier"))
+			multiplier *= _plugin.getConfig().getEnvironmentMultiplier(world.getEnvironment());
+		if (_plugin.getConfig().getGeneralSetting("useTimeMultiplier"))
+			multiplier *= _plugin.getConfig().getTimeMultiplier(Time.getTimeOfDay(world.getTime()));			
+		if (_plugin.getConfig().getGeneralSetting("useWorldMultiplier"))
+			multiplier *= _plugin.getConfig().getWorldMultiplier(world.getName());
+
+		double reward = _plugin.getConfig().getReward(world.getName(), creature)*multiplier;
+		
+		if (reward != 0.0) {					
 			Account account = iConomy.getBank().getAccount(player.getName());
 					
 			if (reward > 0.0) {

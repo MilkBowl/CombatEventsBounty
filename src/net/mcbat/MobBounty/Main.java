@@ -47,7 +47,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		_logger.info("[MobBounty] v"+this.getDescription().getVersion()+" (Beryllium) loaded.");
+		_logger.info("[MobBounty] v"+this.getDescription().getVersion()+" (Carbon) loaded.");
 		_logger.info("[MobBounty] Developed by: [Mattera, Steven (IchigoKyger)].");
 		
 		_config = new ConfigManager(this);

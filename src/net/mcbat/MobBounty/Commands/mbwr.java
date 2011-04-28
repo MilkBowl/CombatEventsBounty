@@ -11,7 +11,6 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 
 public class mbwr implements CommandExecutor {
@@ -39,7 +38,7 @@ public class mbwr implements CommandExecutor {
 				World world = _plugin.getServer().getWorld(args[0]);
 		
 				if (world != null) {
-					CreatureType mob = CreatureID.identifyCreatureByName(args[1]);
+					CreatureID mob = CreatureID.fromName(args[1]);
 		
 					if (mob != null) {
 						Double amount = Double.parseDouble(args[2]);
@@ -56,7 +55,7 @@ public class mbwr implements CommandExecutor {
 				World world = _plugin.getServer().getWorld(args[0]);
 				
 				if (world != null) {
-					CreatureType mob = CreatureID.identifyCreatureByName(args[1]);
+					CreatureID mob = CreatureID.fromName(args[1]);
 		
 					if (mob != null) {
 						_plugin.getConfig().removeReward(world.getName(), mob);
@@ -90,6 +89,6 @@ public class mbwr implements CommandExecutor {
 		
 		sender.sendMessage(Colors.Red+"Usage: /"+command+" [world] [mob] <amount|default>");
 		sender.sendMessage(worldsStr);
-		sender.sendMessage(Colors.Gray+"Mobs: Zombie PigZombie Skeleton Slime Chicken Pig Monster Spider Creeper Ghast Squid Giant Cow Sheep Wolf");
+		sender.sendMessage(Colors.Gray+"Mobs: Zombie PigZombie Skeleton Slime Chicken Pig Monster Spider Creeper ElectrifiedCreeper Ghast Squid Giant Cow Sheep Wolf TamedWolf");
 	}
 }

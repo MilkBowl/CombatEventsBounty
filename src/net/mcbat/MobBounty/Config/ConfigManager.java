@@ -1,10 +1,9 @@
 package net.mcbat.MobBounty.Config;
 
 import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.Utils.CreatureID;
 
 import org.bukkit.World.Environment;
-import org.bukkit.entity.CreatureType;
-
 
 public class ConfigManager {
 	private final Main _plugin;
@@ -79,19 +78,19 @@ public class ConfigManager {
 
 	// Rewards
 	
-	public double getReward(String name, CreatureType creature) {
+	public double getReward(String name, CreatureID creature) {
 		return _rewardConf.getReward(name, creature);
 	}
 		
-	public void setReward(String name, CreatureType creature, double amount) {
+	public void setReward(String name, CreatureID creature, double amount) {
 		_rewardConf.setReward(name, creature, amount);
 	}
 	
-	public void setDefaultReward(CreatureType creature, double amount) {
+	public void setDefaultReward(CreatureID creature, double amount) {
 		_rewardConf.setDefaultReward(creature, amount);
 	}
 	
-	public void removeReward(String name, CreatureType creature) {
+	public void removeReward(String name, CreatureID creature) {
 		_rewardConf.removeReward(name, creature);
 	}
 }
