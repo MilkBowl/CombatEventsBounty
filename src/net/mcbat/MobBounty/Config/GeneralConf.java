@@ -2,17 +2,17 @@ package net.mcbat.MobBounty.Config;
 
 import java.io.File;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 
 import org.bukkit.util.config.Configuration;
 
 public class GeneralConf {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 	
 	private final File _generalConfigFile;
 	private Configuration generalConfig;
 	
-	public GeneralConf(Main plugin) {
+	public GeneralConf(MobBounty plugin) {
 		_plugin = plugin;
 
 		_generalConfigFile = new File(_plugin.getDataFolder() + File.separator + "General.yml");

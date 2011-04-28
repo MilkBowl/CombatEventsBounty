@@ -1,18 +1,18 @@
 package net.mcbat.MobBounty.Config;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.CreatureID;
 
 import org.bukkit.World.Environment;
 
 public class ConfigManager {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 	
 	private final GeneralConf _generalConf;
 	private final MultiplierConf _multiplierConf;
 	private final RewardConf _rewardConf;
 
-	public ConfigManager(Main plugin) {
+	public ConfigManager(MobBounty plugin) {
 		_plugin = plugin;
 		
 		_generalConf = new GeneralConf(plugin);

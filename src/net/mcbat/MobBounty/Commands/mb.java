@@ -1,6 +1,6 @@
 package net.mcbat.MobBounty.Commands;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 import net.mcbat.MobBounty.Utils.CreatureID;
 import net.mcbat.MobBounty.Utils.Time;
@@ -14,9 +14,9 @@ import org.bukkit.entity.Player;
 import com.nijiko.coelho.iConomy.iConomy;
 
 public class mb implements CommandExecutor {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 	
-	public mb(Main plugin) {
+	public mb(MobBounty plugin) {
 		_plugin = plugin;
 	}
 	

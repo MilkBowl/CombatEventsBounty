@@ -1,5 +1,5 @@
 name: MobBounty
-main: net.mcbat.MobBounty.Main
+main: net.mcbat.MobBounty.MobBounty
 version: 3.00
 website: http://mc-bat.net
 author: Steven Mattera
@@ -50,5 +50,3 @@ commands:
     usage: /<command>
     alias:
       - mbload
-depend:
-  - iConomy

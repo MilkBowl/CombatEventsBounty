@@ -1,6 +1,6 @@
 package net.mcbat.MobBounty.Commands;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 
 import org.bukkit.World.Environment;
@@ -10,9 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class mbem implements CommandExecutor {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 
-	public mbem(Main plugin) {
+	public mbem(MobBounty plugin) {
 		_plugin = plugin;
 	}
 	

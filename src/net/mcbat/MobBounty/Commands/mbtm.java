@@ -1,6 +1,6 @@
 package net.mcbat.MobBounty.Commands;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 import net.mcbat.MobBounty.Utils.Time;
 
@@ -10,9 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class mbtm implements CommandExecutor {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 	
-	public mbtm(Main plugin) {
+	public mbtm(MobBounty plugin) {
 		_plugin = plugin;		
 	}
 	

@@ -3,7 +3,7 @@ package net.mcbat.MobBounty.Commands;
 import java.util.Iterator;
 import java.util.List;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 import net.mcbat.MobBounty.Utils.CreatureID;
 
@@ -14,9 +14,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class mbwr implements CommandExecutor {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 
-	public mbwr(Main plugin) {
+	public mbwr(MobBounty plugin) {
 		_plugin = plugin;
 	}
 

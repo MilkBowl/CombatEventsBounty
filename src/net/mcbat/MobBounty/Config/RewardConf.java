@@ -6,14 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.CreatureID;
 
 import org.bukkit.World;
 import org.bukkit.util.config.Configuration;
 
 public class RewardConf {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 	
 	private final File _rewardConfigFile;
 	private Configuration rewardConfig;
@@ -21,7 +21,7 @@ public class RewardConf {
 	private Map<CreatureID, Double> defaultReward;
 	private Map<String, Map<CreatureID, Double>> worldReward;
 	
-	public RewardConf(Main plugin) {
+	public RewardConf(MobBounty plugin) {
 		_plugin = plugin;
 
 		_rewardConfigFile = new File(_plugin.getDataFolder() + File.separator + "Reward.yml");

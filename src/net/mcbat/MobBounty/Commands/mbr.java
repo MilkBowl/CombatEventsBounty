@@ -1,6 +1,6 @@
 package net.mcbat.MobBounty.Commands;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 import net.mcbat.MobBounty.Utils.CreatureID;
 
@@ -10,9 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class mbr implements CommandExecutor {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 
-	public mbr(Main plugin) {
+	public mbr(MobBounty plugin) {
 		_plugin = plugin;
 	}
 	

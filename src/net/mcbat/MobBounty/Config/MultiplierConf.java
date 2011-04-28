@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.mcbat.MobBounty.Main;
+import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Time;
 
 import org.bukkit.World;
@@ -14,7 +14,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.util.config.Configuration;
 
 public class MultiplierConf {
-	private final Main _plugin;
+	private final MobBounty _plugin;
 	
 	private final File _multiplierConfigFile;
 	private Configuration multiplierConfig;
@@ -23,7 +23,7 @@ public class MultiplierConf {
 	private Map<String, Double> timeMultiplier;
 	private Map<String, Double> worldMultiplier;
 	
-	public MultiplierConf(Main plugin) {
+	public MultiplierConf(MobBounty plugin) {
 		_plugin = plugin;
 
 		_multiplierConfigFile = new File(_plugin.getDataFolder() + File.separator + "Multiplier.yml");
