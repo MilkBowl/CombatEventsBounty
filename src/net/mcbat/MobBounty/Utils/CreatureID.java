@@ -1,9 +1,5 @@
 package net.mcbat.MobBounty.Utils;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.server.EntityWolf;
 
 import org.bukkit.craftbukkit.entity.CraftWolf;
@@ -43,14 +39,7 @@ public enum CreatureID {
 	ZOMBIE("Zombie");
 	
 	private String _name;
-	private static final Map<String, CreatureID> _mapping = new HashMap<String, CreatureID>();
-	
-	static {
-		for (CreatureID id : EnumSet.allOf(CreatureID.class)) {
-			_mapping.put(id.name(), id);
-		}
-	}
-	
+
 	private CreatureID(String name) {
 		_name = name;
 	}
@@ -60,7 +49,12 @@ public enum CreatureID {
 	}
 	
 	public static CreatureID fromName(String name) {
-		return _mapping.get(name);
+		for (CreatureID id : CreatureID.values()) {
+			if (id.name().equalsIgnoreCase(name))
+				return id;
+		}
+		
+		return null;
 	}
 	
 	public static CreatureID fromEntity(Entity entity) {

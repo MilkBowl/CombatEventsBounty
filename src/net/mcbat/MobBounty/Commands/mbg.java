@@ -42,6 +42,10 @@ public class mbg implements CommandExecutor {
 					_plugin.getConfig().setGeneralSetting("useWorldMultiplier", true);
 					sender.sendMessage(Colors.DarkGreen+"General setting "+Colors.White+"useWorldMultiplier"+Colors.DarkGreen+" has been changed to "+Colors.White+"True"+Colors.DarkGreen+".");
 				}
+				else if (args[0].equalsIgnoreCase("deprreturn")) {
+					_plugin.getConfig().setGeneralSetting("useDepreciativeReturn", true);
+					sender.sendMessage(Colors.DarkGreen+"General setting "+Colors.White+"useDepreciativeReturn"+Colors.DarkGreen+" has been changed to "+Colors.White+"True"+Colors.DarkGreen+".");
+				}
 				else
 					this.commandUsage(sender, command);
 			}
@@ -58,6 +62,18 @@ public class mbg implements CommandExecutor {
 					_plugin.getConfig().setGeneralSetting("useWorldMultiplier", false);
 					sender.sendMessage(Colors.DarkGreen+"General setting "+Colors.White+"useWorldMultiplier"+Colors.DarkGreen+" has been changed to "+Colors.White+"False"+Colors.DarkGreen+".");
 				}
+				else if (args[0].equalsIgnoreCase("deprreturn")) {
+					_plugin.getConfig().setGeneralSetting("useDepreciativeReturn", false);
+					sender.sendMessage(Colors.DarkGreen+"General setting "+Colors.White+"useDepreciativeReturn"+Colors.DarkGreen+" has been changed to "+Colors.White+"False"+Colors.DarkGreen+".");
+				}
+				else
+					this.commandUsage(sender, command);
+			}
+			else if (args[1].matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")) {
+				if (args[0].equalsIgnoreCase("deprreturnrate")) {
+					_plugin.getConfig().setGeneralSetting("depreciativeReturnRate", Double.parseDouble(args[1]));
+					sender.sendMessage(Colors.DarkGreen+"General setting "+Colors.White+"depreciativeReturnRate"+Colors.DarkGreen+" has been changed to "+Colors.White+args[1]+Colors.DarkGreen+".");
+				}
 				else
 					this.commandUsage(sender, command);
 			}
@@ -69,7 +85,7 @@ public class mbg implements CommandExecutor {
  	}
 	
 	private void commandUsage(CommandSender sender, String command) {
-		sender.sendMessage(Colors.Red+"Usage: /"+command+" [property] <true|false>");
-		sender.sendMessage(Colors.Gray+"Property: EnvMulti TimeMulti WorldMulti");
+		sender.sendMessage(Colors.Red+"Usage: /"+command+" [property] <value>");
+		sender.sendMessage(Colors.Gray+"Property: EnvMulti TimeMulti WorldMulti DeprReturn DeprReturnRate");
 	}
 }

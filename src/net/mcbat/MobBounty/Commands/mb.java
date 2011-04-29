@@ -41,11 +41,11 @@ public class mb implements CommandExecutor {
 		
 		double multiplier = 1.0;
 		
-		if (_plugin.getConfig().getGeneralSetting("useEnvironmentMultiplier"))
+		if ((Boolean) _plugin.getConfig().getGeneralSetting("useEnvironmentMultiplier"))
 			multiplier *= _plugin.getConfig().getEnvironmentMultiplier(world.getEnvironment());
-		if (_plugin.getConfig().getGeneralSetting("useTimeMultiplier"))
+		if ((Boolean) _plugin.getConfig().getGeneralSetting("useTimeMultiplier"))
 			multiplier *= _plugin.getConfig().getTimeMultiplier(Time.getTimeOfDay(world.getTime()));			
-		if (_plugin.getConfig().getGeneralSetting("useWorldMultiplier"))
+		if ((Boolean) _plugin.getConfig().getGeneralSetting("useWorldMultiplier"))
 			multiplier *= _plugin.getConfig().getWorldMultiplier(world.getName());
 		
 		for (CreatureID creature : CreatureID.values()) {

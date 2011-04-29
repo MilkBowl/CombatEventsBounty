@@ -26,7 +26,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 import com.spikensbror.bukkit.mineconomy.MineConomy;
 
-import BOSEconomy.cosine.boseconomy.BOSEconomy;
+import cosine.boseconomy.BOSEconomy;
 
 
 public class MobBounty extends JavaPlugin {

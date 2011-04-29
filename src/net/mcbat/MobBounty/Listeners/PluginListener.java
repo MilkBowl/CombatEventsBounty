@@ -6,7 +6,7 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
 import org.bukkit.plugin.Plugin;
 
-import BOSEconomy.cosine.boseconomy.BOSEconomy;
+import cosine.boseconomy.BOSEconomy;
 
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijikokun.bukkit.Permissions.Permissions;
@@ -20,7 +20,7 @@ public class PluginListener extends ServerListener {
 	
 	public void onPluginEnable(PluginEnableEvent event) {
 		if (_plugin != null) {
-			if (_plugin.iConomy == null && _plugin.BosEconomy == null) {
+			if (_plugin.iConomy == null && _plugin.BOSEconomy == null) {
 				Plugin iConomyPlugin = _plugin.getServer().getPluginManager().getPlugin("iConomy");
 				Plugin BOSEconomyPlugin = _plugin.getServer().getPluginManager().getPlugin("BOSEconomy");
 			

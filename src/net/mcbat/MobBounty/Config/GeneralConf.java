@@ -23,6 +23,8 @@ public class GeneralConf {
 		generalConfig.setProperty("useEnvironmentMultiplier", false);
 		generalConfig.setProperty("useTimeMultiplier", false);
 		generalConfig.setProperty("useWorldMultiplier", true);
+		generalConfig.setProperty("useDepreciativeReturn", false);
+		generalConfig.setProperty("depreciativeReturnRate", new Double(0.1));
 		
 		this.saveConfig();
 	}
@@ -40,13 +42,14 @@ public class GeneralConf {
 		generalConfig.save();
 	}
 	
-	public boolean getProperty(String prop) {
+	public Object getProperty(String prop) {
+		if (prop.equalsIgnoreCase("depreciativeReturnRate"))
+			return generalConfig.getDouble(prop, 0.1);
+		
 		return generalConfig.getBoolean(prop, false);
 	}
-	
-	public void setProperty(String prop, boolean value) {
-		_plugin.getLogger().info(prop);
-		
+
+	public void setProperty(String prop, Object value) {
 		generalConfig.setProperty(prop, value);
 		this.saveConfig();
 	}
