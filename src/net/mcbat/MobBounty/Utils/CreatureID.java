@@ -26,7 +26,6 @@ public enum CreatureID {
 	ELECTRIFIED_CREEPER("ElectrifiedCreeper"),
 	GHAST("Ghast"),
 	GIANT("Giant"),
-	MONSTER("Monster"),
 	PIG("Pig"),
 	PIG_ZOMBIE("PigZombie"),
 	SHEEP("Sheep"),

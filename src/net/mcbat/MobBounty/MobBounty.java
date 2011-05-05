@@ -13,6 +13,7 @@ import net.mcbat.MobBounty.Commands.mbwm;
 import net.mcbat.MobBounty.Commands.mbwr;
 import net.mcbat.MobBounty.Config.ConfigManager;
 import net.mcbat.MobBounty.Listeners.DeathListener;
+import net.mcbat.MobBounty.Listeners.LogoutListener;
 import net.mcbat.MobBounty.Listeners.PluginListener;
 
 import org.bukkit.event.Event;
@@ -20,7 +21,7 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.nijiko.coelho.iConomy.iConomy;
+import com.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -31,6 +32,7 @@ import cosine.boseconomy.BOSEconomy;
 
 public class MobBounty extends JavaPlugin {
 	private final DeathListener _deathListener = new DeathListener(this);
+	private final LogoutListener _logoutListener = new LogoutListener(this);
 	private final PluginListener _pluginListener = new PluginListener(this);
 	
 	private final mb _mb = new mb(this);
@@ -112,11 +114,12 @@ public class MobBounty extends JavaPlugin {
 			}
 		}
 		
+		this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_QUIT, _logoutListener, Priority.Monitor, this);
+		this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_KICK, _logoutListener, Priority.Monitor, this);
 		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DAMAGE, _deathListener, Priority.Monitor, this);
 		this.getServer().getPluginManager().registerEvent(Event.Type.ENTITY_DEATH, _deathListener, Priority.Monitor, this);
-
-		if ((iConomy == null && BOSEconomy == null && MineConomy == null) || Permissions == null)
-			this.getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, _pluginListener, Priority.Monitor, this);
+		this.getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, _pluginListener, Priority.Monitor, this);
+		this.getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_DISABLE, _pluginListener, Priority.Monitor, this);
 	}
 
 	@Override
@@ -132,5 +135,9 @@ public class MobBounty extends JavaPlugin {
 	
 	public Logger getLogger() {
 		return _logger;
+	}
+	
+	public void onPlayerLeft(String name) {
+		_deathListener.onPlayerLeft(name);
 	}
 }

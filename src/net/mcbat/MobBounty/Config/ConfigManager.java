@@ -9,7 +9,7 @@ public class ConfigManager {
 	private final MobBounty _plugin;
 	
 	private final GeneralConf _generalConf;
-	private final LocaleConf _localeConf;
+	//private final LocaleConf _localeConf;
 	private final MultiplierConf _multiplierConf;
 	private final RewardConf _rewardConf;
 
@@ -17,14 +17,14 @@ public class ConfigManager {
 		_plugin = plugin;
 		
 		_generalConf = new GeneralConf(plugin);
-		_localeConf = new LocaleConf(plugin);
+		//_localeConf = new LocaleConf(plugin);
 		_multiplierConf = new MultiplierConf(plugin);
 		_rewardConf = new RewardConf(plugin);
 	}
 	
 	public void loadConfig() {
 		_generalConf.loadConfig();
-		_localeConf.loadConfig();
+		//_localeConf.loadConfig();
 		_multiplierConf.loadConfig();
 		_rewardConf.loadConfig();
 		
@@ -33,7 +33,7 @@ public class ConfigManager {
 	
 	public void saveConf() {
 		_generalConf.saveConfig();
-		_localeConf.saveConfig();
+		//_localeConf.saveConfig();
 		_multiplierConf.saveConfig();
 		_rewardConf.saveConfig();
 

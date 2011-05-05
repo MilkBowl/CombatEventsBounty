@@ -2,52 +2,58 @@ package net.mcbat.MobBounty.Listeners;
 
 import net.mcbat.MobBounty.MobBounty;
 
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
-import org.bukkit.plugin.Plugin;
 
 import cosine.boseconomy.BOSEconomy;
 
-import com.nijiko.coelho.iConomy.iConomy;
+import com.iConomy.iConomy;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.spikensbror.bukkit.mineconomy.MineConomy;
 
 public class PluginListener extends ServerListener {
-	private static MobBounty _plugin = null;
+	private final MobBounty _plugin;
 		
 	public PluginListener(MobBounty plugin) {
-		if (_plugin == null) _plugin = plugin;
+		_plugin = plugin;
 	}
 	
 	public void onPluginEnable(PluginEnableEvent event) {
-		if (_plugin != null) {
-			if (_plugin.iConomy == null && _plugin.BOSEconomy == null) {
-				Plugin iConomyPlugin = _plugin.getServer().getPluginManager().getPlugin("iConomy");
-				Plugin BOSEconomyPlugin = _plugin.getServer().getPluginManager().getPlugin("BOSEconomy");
-			
-				if (iConomyPlugin != null) {
-					if (iConomyPlugin.isEnabled()) {
-						_plugin.iConomy = (iConomy) iConomyPlugin;
-						_plugin.getLogger().info("[MobBounty] hooked into iConomy.");
-					}
-				}
-				else if (BOSEconomyPlugin != null) {
-					if (BOSEconomyPlugin.isEnabled()) {
-						_plugin.BOSEconomy = (BOSEconomy) BOSEconomyPlugin;
-						_plugin.getLogger().info("[MobBounty] hooked into BOSEconomy.");
-					}
-				}
-			}
-			
-			if (_plugin.Permissions == null) {
-				Plugin Permissions = _plugin.getServer().getPluginManager().getPlugin("Permissions");
-				
-				if (Permissions != null) {
-					if (Permissions.isEnabled()) {
-						_plugin.Permissions = ((Permissions) Permissions).getHandler();
-						_plugin.getLogger().info("[MobBounty] hooked into Permissions/GroupManager.");
-					}
-				}
-			}
+		if (_plugin.iConomy == null && event.getPlugin().getDescription().getName().equals("iConomy")) {
+			_plugin.iConomy = (iConomy) event.getPlugin();
+			_plugin.getLogger().info("[MobBounty] hooked into iConomy.");
+		}
+		else if (_plugin.BOSEconomy == null && event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
+			_plugin.BOSEconomy = (BOSEconomy) event.getPlugin();
+			_plugin.getLogger().info("[MobBounty] hooked into BOSEconomy.");
+		}
+		else if (_plugin.MineConomy == null && event.getPlugin().getDescription().getName().equals("MineConomy")) {
+			_plugin.MineConomy = (MineConomy) event.getPlugin();
+			_plugin.getLogger().info("[MobBounty] hooked into MineConomy.");
+		}
+		else if (_plugin.Permissions == null && event.getPlugin().getDescription().getName().equals("Permissions")) {
+			_plugin.Permissions = ((Permissions)event.getPlugin()).getHandler();
+			_plugin.getLogger().info("[MobBounty] hooked into Permissions/GroupManager.");
+		}
+	}
+	
+	public void onPluginDisable(PluginDisableEvent event) {
+		if (_plugin.iConomy != null && event.getPlugin().getDescription().getName().equals("iConomy")) {
+			_plugin.iConomy = null;
+			_plugin.getLogger().info("[MobBounty] un-hooked from iConomy");
+		}
+		else if (_plugin.BOSEconomy != null && event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
+			_plugin.BOSEconomy = null;
+			_plugin.getLogger().info("[MobBounty] un-hooked from BOSEconomy");
+		}
+		else if (_plugin.MineConomy != null && event.getPlugin().getDescription().getName().equals("MineConomy")) {
+			_plugin.MineConomy = null;
+			_plugin.getLogger().info("[MobBounty] un-hooked from MineConomy");
+		}
+		else if (_plugin.Permissions != null && event.getPlugin().getDescription().getName().equals("Permissions")) {
+			_plugin.Permissions = null;
+			_plugin.getLogger().info("[MobBounty] un-hooked from Permissions/GroupManager");
 		}
 	}
 }

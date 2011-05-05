@@ -21,8 +21,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityListener;
 
-import com.nijiko.coelho.iConomy.iConomy;
-import com.nijiko.coelho.iConomy.system.Account;
+import com.iConomy.iConomy;
+import com.iConomy.system.Account;
 
 public class DeathListener extends EntityListener {
 	private final MobBounty _plugin;
@@ -38,6 +38,10 @@ public class DeathListener extends EntityListener {
 		
 		_playerData = new HashMap<String, PlayerKillInfo>();
 		_deathNote = new HashMap<LivingEntity, Player>();
+	}
+	
+	public void onPlayerLeft(String name) {
+		_playerData.remove(name);
 	}
 	
 	public void onEntityDamage(EntityDamageEvent event) {
@@ -148,15 +152,17 @@ public class DeathListener extends EntityListener {
 		if (reward != 0.0) {
 			
 			if (_plugin.iConomy != null) {
-				Account account = iConomy.getBank().getAccount(player.getName());
-					
-				if (reward > 0.0) {
-					account.add(reward);
-					player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+_formatter.format(reward)+Colors.DarkGreen+" "+iConomy.getBank().getCurrency()+"(s) for killing a "+Colors.White+creature.getName());
-				}
-				else if (reward < 0.0) {
-					account.subtract(Math.abs(reward));
-					player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+_formatter.format(Math.abs(reward))+Colors.DarkRed+" "+iConomy.getBank().getCurrency()+"(s) for killing a "+Colors.White+creature.getName());
+				Account account = iConomy.getAccount(player.getName());
+				
+				if (account != null) {
+					if (reward > 0.0) {
+						account.getHoldings().add(reward);
+						player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+iConomy.format(reward)+Colors.DarkGreen+" for killing a "+Colors.White+creature.getName());
+					}
+					else if (reward < 0.0) {
+						account.getHoldings().subtract(Math.abs(reward));
+						player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+iConomy.format(Math.abs(reward))+Colors.DarkRed+" for killing a "+Colors.White+creature.getName());
+					}
 				}
 			}
 			else if (_plugin.BOSEconomy != null) {
