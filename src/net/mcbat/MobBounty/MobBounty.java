@@ -74,11 +74,16 @@ public class MobBounty extends JavaPlugin {
 		
 		if (iConomy == null && BOSEconomy == null && MineConomy == null) {
 			Plugin iConomyPlugin = this.getServer().getPluginManager().getPlugin("iConomy");
-					
+			
 			if (iConomyPlugin != null) {
 				if (iConomyPlugin.isEnabled()) {
-					iConomy = (iConomy) iConomyPlugin;
-					this.getLogger().info("[MobBounty] hooked into iConomy.");
+					if (iConomyPlugin.getDescription().getMain().equals("com.nijiko.coelho.iConomy.iConomy")) {
+						this.getLogger().severe("[MobBounty] upgrade to iConomy 5.0! (forums.bukkit.org/threads/40/)");
+					}
+					else {
+						iConomy = (iConomy) iConomyPlugin;
+						this.getLogger().info("[MobBounty] hooked into iConomy.");
+					}
 				}
 			}
 			else {

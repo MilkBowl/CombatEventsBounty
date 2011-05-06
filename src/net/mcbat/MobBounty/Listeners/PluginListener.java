@@ -21,8 +21,13 @@ public class PluginListener extends ServerListener {
 	
 	public void onPluginEnable(PluginEnableEvent event) {
 		if (_plugin.iConomy == null && event.getPlugin().getDescription().getName().equals("iConomy")) {
-			_plugin.iConomy = (iConomy) event.getPlugin();
-			_plugin.getLogger().info("[MobBounty] hooked into iConomy.");
+			if (event.getPlugin().getDescription().getMain().equals("com.nijiko.coelho.iConomy.iConomy")) {
+				_plugin.getLogger().severe("[MobBounty] you must upgrade to iConomy 5.0! (forums.bukkit.org/threads/40/");
+			}
+			else {
+				_plugin.iConomy = (iConomy) event.getPlugin();
+				_plugin.getLogger().info("[MobBounty] hooked into iConomy.");
+			}
 		}
 		else if (_plugin.BOSEconomy == null && event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
 			_plugin.BOSEconomy = (BOSEconomy) event.getPlugin();
