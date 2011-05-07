@@ -1,6 +1,6 @@
 name: MobBounty
 main: net.mcbat.MobBounty.MobBounty
-version: 3.01
+version: 3.02
 website: http://mc-bat.net
 author: Steven Mattera
 description: Simple plugin for iConomy that pays/fines players for killing mobs.

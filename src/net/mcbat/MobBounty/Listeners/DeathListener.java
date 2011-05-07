@@ -1,13 +1,12 @@
 package net.mcbat.MobBounty.Listeners;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 import net.mcbat.MobBounty.Utils.CreatureID;
+import net.mcbat.MobBounty.Utils.Currency;
 import net.mcbat.MobBounty.Utils.PlayerKillInfo;
 import net.mcbat.MobBounty.Utils.Time;
 
@@ -27,14 +26,11 @@ import com.iConomy.system.Account;
 public class DeathListener extends EntityListener {
 	private final MobBounty _plugin;
 	
-	private final NumberFormat _formatter;
-	
 	private Map<String, PlayerKillInfo> _playerData;
 	private Map<LivingEntity, Player> _deathNote;
 	
 	public DeathListener(MobBounty plugin) {
 		_plugin = plugin;
-		_formatter = new DecimalFormat("#0.00");
 		
 		_playerData = new HashMap<String, PlayerKillInfo>();
 		_deathNote = new HashMap<LivingEntity, Player>();
@@ -147,7 +143,7 @@ public class DeathListener extends EntityListener {
 			_playerData.put(player.getName(), info);
 		}
 		
-		reward = Double.valueOf(_formatter.format(reward*multiplier*rewardAmount));
+		reward = Currency.convertToCurrency(reward*multiplier*rewardAmount);
 		
 		if (reward != 0.0) {
 			
@@ -170,27 +166,27 @@ public class DeathListener extends EntityListener {
 					_plugin.BOSEconomy.addPlayerMoney(player.getName(), (int)reward, true);
 					
 					if (reward == 1.0)
-						player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+_formatter.format(reward)+Colors.DarkGreen+" "+_plugin.BOSEconomy.getMoneyName()+" for killing a "+Colors.White+creature.getName());
+						player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+reward+Colors.DarkGreen+" "+_plugin.BOSEconomy.getMoneyName()+" for killing a "+Colors.White+creature.getName());
 					else
-						player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+_formatter.format(reward)+Colors.DarkGreen+" "+_plugin.BOSEconomy.getMoneyNamePlural()+" for killing a "+Colors.White+creature.getName());
+						player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+reward+Colors.DarkGreen+" "+_plugin.BOSEconomy.getMoneyNamePlural()+" for killing a "+Colors.White+creature.getName());
 				}
 				else if (reward < 0.0) {
 					_plugin.BOSEconomy.addPlayerMoney(player.getName(), (int)reward, true);
 
 					if (reward == -1.0)
-						player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+_formatter.format(Math.abs(reward))+Colors.DarkRed+" "+_plugin.BOSEconomy.getMoneyName()+" for killing a "+Colors.White+creature.getName());
+						player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+Math.abs(reward)+Colors.DarkRed+" "+_plugin.BOSEconomy.getMoneyName()+" for killing a "+Colors.White+creature.getName());
 					else
-						player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+_formatter.format(Math.abs(reward))+Colors.DarkRed+" "+_plugin.BOSEconomy.getMoneyNamePlural()+" for killing a "+Colors.White+creature.getName());
+						player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+Math.abs(reward)+Colors.DarkRed+" "+_plugin.BOSEconomy.getMoneyNamePlural()+" for killing a "+Colors.White+creature.getName());
 				}
 			}
 			else if (_plugin.MineConomy != null) {
 				if (reward > 0.0) {
 					_plugin.MineConomy.getBank().add(player.getName(), reward);
-					player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+_formatter.format(reward)+Colors.DarkGreen+" for killing a "+Colors.White+creature.getName());
+					player.sendMessage(Colors.DarkGreen+"You have been awarded "+Colors.White+reward+Colors.DarkGreen+" for killing a "+Colors.White+creature.getName());
 				}
 				else if (reward < 0.0) {
-					_plugin.MineConomy.getBank().subtract(player.getName(), reward);
-					player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+_formatter.format(Math.abs(reward))+Colors.DarkRed+" for killing a "+Colors.White+creature.getName());
+					_plugin.MineConomy.getBank().subtract(player.getName(), Math.abs(reward));
+					player.sendMessage(Colors.DarkRed+"You have been fined "+Colors.White+Math.abs(reward)+Colors.DarkRed+" for killing a "+Colors.White+creature.getName());
 				}
 			}
 		}

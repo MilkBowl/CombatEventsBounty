@@ -1,11 +1,9 @@
 package net.mcbat.MobBounty.Commands;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import net.mcbat.MobBounty.MobBounty;
 import net.mcbat.MobBounty.Utils.Colors;
 import net.mcbat.MobBounty.Utils.CreatureID;
+import net.mcbat.MobBounty.Utils.Currency;
 import net.mcbat.MobBounty.Utils.Time;
 
 import org.bukkit.World;
@@ -19,11 +17,8 @@ import com.iConomy.iConomy;
 public class mb implements CommandExecutor {
 	private final MobBounty _plugin;
 
-	private final NumberFormat _formatter;
-
 	public mb(MobBounty plugin) {
 		_plugin = plugin;
-		_formatter = new DecimalFormat("#0.00");
 	}
 	
 	@Override
@@ -55,7 +50,7 @@ public class mb implements CommandExecutor {
 			multiplier *= _plugin.getConfig().getWorldMultiplier(world.getName());
 		
 		for (CreatureID creature : CreatureID.values()) {
-			double reward = _plugin.getConfig().getReward(world.getName(), creature) * multiplier;
+			double reward = Currency.convertToCurrency(_plugin.getConfig().getReward(world.getName(), creature) * multiplier);
 			
 			if (_plugin.iConomy != null) {
 				if (reward > 0.0)
@@ -65,15 +60,15 @@ public class mb implements CommandExecutor {
 			}
 			else if (_plugin.BOSEconomy != null) {
 				if (reward > 0.0)
-					player.sendMessage(Colors.DarkGreen+creature.getName()+" : "+Colors.White+_formatter.format(reward)+" "+_plugin.BOSEconomy.getMoneyNamePlural());
+					player.sendMessage(Colors.DarkGreen+creature.getName()+" : "+Colors.White+reward+" "+_plugin.BOSEconomy.getMoneyNamePlural());
 				else if (reward < 0.0)
-					player.sendMessage(Colors.DarkRed+creature.getName()+" : "+Colors.White+_formatter.format(reward)+" "+_plugin.BOSEconomy.getMoneyNamePlural());
+					player.sendMessage(Colors.DarkRed+creature.getName()+" : "+Colors.White+reward+" "+_plugin.BOSEconomy.getMoneyNamePlural());
 			}
 			else if (_plugin.MineConomy != null) {
 				if (reward > 0.0)
-					player.sendMessage(Colors.DarkGreen+creature.getName()+" : "+Colors.White+_formatter.format(reward));
+					player.sendMessage(Colors.DarkGreen+creature.getName()+" : "+Colors.White+reward);
 				else if (reward < 0.0)
-					player.sendMessage(Colors.DarkRed+creature.getName()+" : "+Colors.White+_formatter.format(reward));
+					player.sendMessage(Colors.DarkRed+creature.getName()+" : "+Colors.White+reward);
 			}			
 		}
 	}
