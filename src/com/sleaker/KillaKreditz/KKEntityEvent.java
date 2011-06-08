@@ -6,6 +6,7 @@ package com.sleaker.KillaKreditz;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class KKEntityEvent extends EntityListener {
     
     public void onEntityDamage(EntityDamageEvent event) {
         //Reasons to disregard this event
-        if (event.isCancelled() || !(event.getEntity() instanceof LivingEntity) || event.getEntity() instanceof HumanEntity || plugin.iConomy == null)
+        if (event.isCancelled() || !isValidEntity(event.getEntity()) || plugin.iConomy == null)
             return;
         
         LivingEntity cEntity = (LivingEntity) event.getEntity();
@@ -51,9 +52,27 @@ public class KKEntityEvent extends EntityListener {
     
     public void onEntityDeath (EntityDeathEvent event) {
         //Reasons to disregard this event
-        if (plugin.iConomy == null || !(event.getEntity() instanceof LivingEntity) || event.getEntity() instanceof HumanEntity )
+        if (plugin.iConomy == null || !isValidEntity(event.getEntity()) )
             return;
         
+        LivingEntity cEntity = (LivingEntity) event.getEntity();
+        //Reward the player if the entity map for this creature exists
+        if ( entityMap.containsKey(cEntity) ) {
+            //Remove the mapping since we will be rewarding the player.
+            Player player = entityMap.remove(cEntity);
+            
+            if (player == null)
+                return;
+            else {
+              //TODO: Player reward
+            }     
+        }
+    }
+    
+    private boolean isValidEntity (Entity thisEntity) {
+        if ( !(thisEntity instanceof LivingEntity) || thisEntity instanceof HumanEntity )
+            return false;
         
+        return true;
     }
 }
