@@ -1,0 +1,8 @@
+name: KillaKreditz
+main: com.sleaker.KillaKreditz.KillaKreditz
+version: 0.1
+author: Sleaker
+description: >
+             A plugin that awards players with random
+             amounts of money for killing creatures.
+             supports per world, per creature customizations.
