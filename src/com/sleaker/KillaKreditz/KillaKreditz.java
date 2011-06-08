@@ -32,11 +32,14 @@ public class KillaKreditz extends JavaPlugin {
     public static Map<String, KKWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KKWorldConfig>());
     private final KKWorldLoadEvent worldLoadListener = new KKWorldLoadEvent(this);
     private final KKEntityEvent entityListener = new KKEntityEvent(this);
-    
+    public static double altMultipliers[] = new double[3];
     public static Logger log = Logger.getLogger("Minecraft");
     public iConomy iConomy = null;
     public PermissionHandler Permissions = null;
-    static Configuration config;
+    //Handles the per-world Settings
+    static Configuration wConfig;
+    //Handles the server-wide Settings
+    static Configuration mConfig;
     
     @Override
     public void onDisable() {
@@ -51,18 +54,15 @@ public class KillaKreditz extends JavaPlugin {
 
         //Check to see if there is a worlds configuration file.
         File worldsYml = new File(getDataFolder()+"/worlds.yml");
-
-        if (!worldsYml.exists()) {
-            new File(getDataFolder().toString()).mkdir();
-            try {
-                worldsYml.createNewFile();
-            }
-            catch (IOException ex) {
-                log.info(plugName + " - Cannot create configuration file. And none to load, using defaults.");
-            }
-        }   
-
-        config = getConfiguration();
+        File mainYml = new File(getDataFolder()+"/config.yml");
+        setupFile(worldsYml);
+        setupFile(mainYml);
+        
+        wConfig = new Configuration(worldsYml);
+        wConfig.load();
+        mConfig = getConfiguration();
+        setupMultipliers();
+        
         List<World> worlds = getServer().getWorlds();
 
         for ( World world : worlds)
@@ -86,7 +86,7 @@ public class KillaKreditz extends JavaPlugin {
     public static void setupWorld (String worldName) {
 
         worldConfig.put(worldName, new KKWorldConfig());
-        if ( !config.getKeys(null).contains(worldName) ) {  
+        if ( !wConfig.getKeys(null).contains(worldName) ) {  
             setConfigDefaults(worldName);
             log.info(plugName + " " + worldName + " - Generating defaults.");   
         }        
@@ -95,14 +95,14 @@ public class KillaKreditz extends JavaPlugin {
 
         for (CreatureType creature : CreatureType.values() ) {
             String cName = creature.name();
-            if (config.getNode(worldName + "." + cName) == null) {
-                config.setProperty(worldName + "." + cName + ".minReward", 0.0);
-                config.setProperty(worldName + "." + cName + ".maxReward", 0.0);
-                config.setProperty(worldName + "." + cName + ".rewardChance", 0.0);
+            if (wConfig.getNode(worldName + "." + cName) == null) {
+                wConfig.setProperty(worldName + "." + cName + ".minReward", 0.0);
+                wConfig.setProperty(worldName + "." + cName + ".maxReward", 0.0);
+                wConfig.setProperty(worldName + "." + cName + ".rewardChance", 0.0);
             } else {
-                double minReward = config.getDouble(worldName + "." + cName + ".minReward", 0.0);
-                double maxReward = config.getDouble(worldName + "." + cName + ".maxReward", 0.0);
-                double chance = config.getDouble(worldName + "." + cName + ".rewardChance", 0.0);
+                double minReward = wConfig.getDouble(worldName + "." + cName + ".minReward", 0.0);
+                double maxReward = wConfig.getDouble(worldName + "." + cName + ".maxReward", 0.0);
+                double chance = wConfig.getDouble(worldName + "." + cName + ".rewardChance", 0.0);
                 conf.set(creature, minReward, maxReward, chance);
             }
         }
@@ -111,11 +111,42 @@ public class KillaKreditz extends JavaPlugin {
     public static void setConfigDefaults (String worldName) {
 
         for (CreatureType creature : CreatureType.values() ) {
-            config.setProperty(worldName + "." + creature.getName().toLowerCase() + ".minReward", 0.0);
-            config.setProperty(worldName + "." + creature.getName().toLowerCase() + ".maxReward", 0.0);
-            config.setProperty(worldName + "." + creature.getName().toLowerCase() + ".rewardChance", 0.0);
+            wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".minReward", 0.0);
+            wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".maxReward", 0.0);
+            wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".rewardChance", 0.0);
         }
-        config.save();
+        wConfig.save();
+        return;
+    }
+    
+    private void setupFile(File file) {
+        if (!file.exists()) {
+            new File(getDataFolder().toString()).mkdir();
+            try {
+                file.createNewFile();
+            }
+            catch (IOException ex) {
+                log.info(plugName + " - Cannot create configuration file. And none to load check your folder permission!");
+            }
+        }   
+    }
+    
+    private void setupMultipliers() {
+        if (mConfig.getNode("alt1") == null)
+            mConfig.setProperty("alt1", (double) 1.0);
+        
+        if (mConfig.getNode("alt2") == null)
+            mConfig.setProperty("alt2", (double) 1.0);
+        
+        if (mConfig.getNode("alt3") == null)
+            mConfig.setProperty("alt3", (double) 1.0);
+        
+        mConfig.save();
+        
+        altMultipliers[0] = mConfig.getDouble("alt1", 1.0);
+        altMultipliers[1] = mConfig.getDouble("alt2", 1.0);
+        altMultipliers[2] = mConfig.getDouble("alt3", 1.0);
+        
         return;
     }
 }

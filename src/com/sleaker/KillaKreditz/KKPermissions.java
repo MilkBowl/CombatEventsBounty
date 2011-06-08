@@ -85,13 +85,19 @@ public class KKPermissions {
     }
 
     // Bonus Multiplier Permissions
-    public static int multiplier(Player player) {
+    public static double multiplier(Player player) {
+        if (permission(player, "kkreditz.multipler.alt1", true))
+            return KillaKreditz.altMultipliers[0];
+        if (permission(player, "kkreditz.multipler.alt2", true))
+            return KillaKreditz.altMultipliers[1];
+        if (permission(player, "kkreditz.multipler.alt3", true))
+            return KillaKreditz.altMultipliers[2];
         if (permission(player, "kkreditz.multiplier.triple", true))
             return 3;
         if (permission(player, "kkreditz.multiplier.double", true))
             return 2;
         
-        return 1;
+        return 1.0;
     }
 }
 
