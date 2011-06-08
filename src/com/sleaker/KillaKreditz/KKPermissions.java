@@ -15,6 +15,7 @@ import org.bukkit.plugin.Plugin;
 public class KKPermissions {
     public static Logger log = Logger.getLogger("Minecraft");
     private static PermissionsHandler handler;
+
     private static Plugin permissionPlugin;
     
     
@@ -99,5 +100,13 @@ public class KKPermissions {
         
         return 1.0;
     }
+    
+    public static boolean isValidHandler() {
+        if (handler == PermissionsHandler.NONE)
+            return false;
+        else
+            return true;
+    }
+    
 }
 

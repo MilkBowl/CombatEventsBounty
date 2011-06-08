@@ -77,8 +77,8 @@ public class KillaKreditz extends JavaPlugin {
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
         
-
-            
+        if ( !KKKreditzHandler.isValidHandler() || !KKPermissions.isValidHandler() )
+            getPluginLoader().disablePlugin(this);    
     }
 
     public static void setupWorld (String worldName) {

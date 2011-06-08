@@ -32,10 +32,10 @@ public class KKKreditzHandler {
         if (iConomy5 != null) {
             handler = EconomyHandler.ICONOMY5;
             String version = iConomy5.getDescription().getVersion();
-            log.info("Economy enabled using: iConomy v" + version);
+            log.info(KillaKreditz.plugName + " - Economy enabled using: iConomy v" + version);
         } else {
             handler = EconomyHandler.NONE;
-            log.warning("An economy plugin isn't loaded.");
+            log.warning(KillaKreditz.plugName + " - An economy plugin isn't loaded.");
         }
     }
 
