@@ -13,16 +13,13 @@ import org.bukkit.event.world.WorldLoadEvent;
  */
 public class KillaKreditzWorldLoadEvent extends WorldListener {
 
-    public class NoSpawnWorldLoadEvent extends WorldListener{
+    public final KillaKreditz plugin;
 
-        public final KillaKreditz plugin;
+    public KillaKreditzWorldLoadEvent(KillaKreditz instance) {
+        plugin = instance;
+    }
 
-        public NoSpawnWorldLoadEvent(KillaKreditz instance) {
-            plugin = instance;
-        }
-
-        public void onWorldLoad(WorldLoadEvent event) {
-            KillaKreditz.setupWorld(event.getWorld().getName());
-        }
+    public void onWorldLoad(WorldLoadEvent event) {
+        KillaKreditz.setupWorld(event.getWorld().getName());
     }
 }

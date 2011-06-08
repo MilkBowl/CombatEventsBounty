@@ -13,7 +13,10 @@ import java.util.logging.Logger;
 
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
+import org.bukkit.event.Event;
+import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
@@ -24,7 +27,8 @@ import org.bukkit.util.config.Configuration;
 public class KillaKreditz extends JavaPlugin {
     private static final String plugName = "[MobMoney]";
     public static Map<String, KillaKreditzConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KillaKreditzConfig>());
-
+    private final KillaKreditzWorldLoadEvent worldLoadListener = new KillaKreditzWorldLoadEvent(this);
+    
     public static Logger log = Logger.getLogger("Minecraft");
 
     static Configuration config;
@@ -59,7 +63,11 @@ public class KillaKreditz extends JavaPlugin {
         for ( World world : worlds)
             setupWorld(world.getName());  
 
-
+        //Create the pluginmanager pm and instantiate our listeners
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
+        
+        
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
     }
