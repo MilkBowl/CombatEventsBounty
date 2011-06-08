@@ -89,7 +89,7 @@ public class KKEntityEvent extends EntityListener {
                 if (conf.get(cType) == null) 
                     return;
                 else {
-                    double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) );
+                    double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * KKPermissions.multiplier(player);
                     if (reward == 0)
                         return;
                     else {
