@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.CreatureType;
@@ -91,13 +92,13 @@ public class KKEntityEvent extends EntityListener {
                 if (conf.get(cType) == null) 
                     return;
                 else {
+                    //Get the reward amount & multiply it out
                     double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * KKPermissions.multiplier(player);
                     if (reward == 0)
                         return;
                     else {
-                        //TODO add multipliers
                         KKKreditzHandler.rewardPlayer(player.getName(), reward);
-                        player.sendMessage("You have been awarded " + KKKreditzHandler.formatCurrency(reward) + " for killing a " + cType.getName() );
+                        player.sendMessage("You have been awarded " + ChatColor.DARK_GREEN + KKKreditzHandler.formatCurrency(reward) + ChatColor.WHITE + " for killing a " + ChatColor.DARK_RED + cType.getName() );
                     }
                 }
             }     
