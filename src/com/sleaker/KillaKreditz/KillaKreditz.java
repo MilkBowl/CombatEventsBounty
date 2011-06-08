@@ -44,13 +44,13 @@ public class KillaKreditz extends JavaPlugin {
         //Get the information from the plugin.yml file.
         PluginDescriptionFile pdfFile = this.getDescription();
 
-        //Check to see if there is a configuration file.
-        File yml = new File(getDataFolder()+"/config.yml");
+        //Check to see if there is a worlds configuration file.
+        File worldsYml = new File(getDataFolder()+"/worlds.yml");
 
-        if (!yml.exists()) {
+        if (!worldsYml.exists()) {
             new File(getDataFolder().toString()).mkdir();
             try {
-                yml.createNewFile();
+                worldsYml.createNewFile();
             }
             catch (IOException ex) {
                 log.info(plugName + " - Cannot create configuration file. And none to load, using defaults.");
