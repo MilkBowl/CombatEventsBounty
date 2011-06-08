@@ -76,7 +76,6 @@ public class KKEntityEvent extends EntityListener {
         if ( entityMap.containsKey(cEntity) ) {
             //Remove the mapping since we will be rewarding the player.
             Player player = entityMap.remove(cEntity);
-            
             if (player == null)
                 return;
             else {
@@ -89,7 +88,7 @@ public class KKEntityEvent extends EntityListener {
                     if (reward == 0)
                         return;
                     else {
-                        //TODO reward the player and notify
+                        //TODO add multipliers
                         KKKreditzHandler.rewardPlayer(player.getName(), reward);
                         player.sendMessage("You have been awarded " + KKKreditzHandler.formatCurrency(reward) + " for killing a " + cType.getName() );
                     }
