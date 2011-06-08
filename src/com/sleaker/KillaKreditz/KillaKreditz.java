@@ -100,10 +100,30 @@ public class KillaKreditz extends JavaPlugin {
                 wConfig.setProperty(worldName + "." + cName + ".minReward", 0.0);
                 wConfig.setProperty(worldName + "." + cName + ".maxReward", 0.0);
                 wConfig.setProperty(worldName + "." + cName + ".rewardChance", 0.0);
+                wConfig.save();
             } else {
                 double minReward = wConfig.getDouble(worldName + "." + cName + ".minReward", 0.0);
                 double maxReward = wConfig.getDouble(worldName + "." + cName + ".maxReward", 0.0);
                 double chance = wConfig.getDouble(worldName + "." + cName + ".rewardChance", 0.0);
+                
+                //Sanity Checks
+                if (minReward < 0) {
+                    minReward = 0;
+                    wConfig.setProperty(worldName + "." + cName + ".minReward", minReward);
+                    wConfig.save();
+                }
+                //Max can't be less than min.
+                if (maxReward < minReward) {
+                    maxReward = minReward;
+                    wConfig.setProperty(worldName + "." + cName + ".maxReward", maxReward);
+                    wConfig.save();
+                }
+                if (chance < 0) {
+                    chance = 0;
+                    wConfig.getDouble(worldName + "." + cName + ".rewardChance", chance);
+                    wConfig.save();
+                }
+                
                 conf.set(creature, minReward, maxReward, chance);
             }
         }
