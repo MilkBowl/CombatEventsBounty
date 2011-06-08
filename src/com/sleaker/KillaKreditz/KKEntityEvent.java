@@ -5,11 +5,26 @@ package com.sleaker.KillaKreditz;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Cow;
+import org.bukkit.entity.CreatureType;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Ghast;
+import org.bukkit.entity.Giant;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Slime;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Spider;
+import org.bukkit.entity.Squid;
+import org.bukkit.entity.Wolf;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByProjectileEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -65,7 +80,20 @@ public class KKEntityEvent extends EntityListener {
             if (player == null)
                 return;
             else {
-              //TODO: Player reward
+                KKWorldConfig conf = KillaKreditz.worldConfig.get(player.getWorld().getName());
+                CreatureType cType = getCType(cEntity);
+                if (conf.get(cType) == null) 
+                    return;
+                else {
+                    double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) );
+                    if (reward == 0)
+                        return;
+                    else {
+                        //TODO reward the player and notify
+                        KKKreditzHandler.rewardPlayer(player.getName(), reward);
+                        player.sendMessage("You have been awarded " + KKKreditzHandler.formatCurrency(reward) + " for killing a " + cType.getName() );
+                    }
+                }
             }     
         }
     }
@@ -75,5 +103,51 @@ public class KKEntityEvent extends EntityListener {
             return false;
         
         return true;
+    }
+    
+    private double getReward(double minAmount, double maxAmount, double chance) {
+        if (chance == 0)
+            return 0;
+        else {
+            Random rand = new Random();
+            if (rand.nextDouble() * 100 < chance ) {
+                // rand * difference + min == num - between min and max
+                return (rand.nextDouble() * (maxAmount - minAmount)) + minAmount;
+            }
+            else
+                return 0;
+        }
+    }
+    
+    private CreatureType getCType(LivingEntity cEntity) {
+        if (cEntity instanceof Chicken)
+            return CreatureType.CHICKEN;
+        else if (cEntity instanceof Cow)
+            return CreatureType.COW;
+        else if (cEntity instanceof Creeper)
+            return CreatureType.CREEPER;
+        else if (cEntity instanceof Ghast)
+            return CreatureType.GHAST;
+        else if (cEntity instanceof Giant)
+            return CreatureType.GIANT;
+        else if (cEntity instanceof Pig)
+            return CreatureType.PIG;
+        else if (cEntity instanceof Sheep)
+            return CreatureType.SHEEP;
+        else if (cEntity instanceof Skeleton)
+            return CreatureType.SKELETON;
+        else if (cEntity instanceof Slime)
+            return CreatureType.SLIME;
+        else if (cEntity instanceof Spider)
+            return CreatureType.SPIDER;
+        else if (cEntity instanceof Squid)
+            return CreatureType.SQUID;
+        else if (cEntity instanceof Wolf)
+            return CreatureType.WOLF;
+        else if (cEntity instanceof Zombie)
+            return CreatureType.ZOMBIE;
+        else
+            return null;
+            
     }
 }
