@@ -31,6 +31,7 @@ public class KillaKreditz extends JavaPlugin {
     static final String plugName = "[KillaKreditz]";
     public static Map<String, KKWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KKWorldConfig>());
     private final KKWorldLoadEvent worldLoadListener = new KKWorldLoadEvent(this);
+    private final KKEntityEvent entityListener = new KKEntityEvent(this);
     
     public static Logger log = Logger.getLogger("Minecraft");
     public iConomy iConomy = null;
@@ -70,7 +71,8 @@ public class KillaKreditz extends JavaPlugin {
         //Create the pluginmanager pm and instantiate our listeners
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
-        
+        pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Priority.Monitor, this);
+        pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Monitor, this);
         //Load up our permissions
         KKPermissions.initialize(getServer());  
         
