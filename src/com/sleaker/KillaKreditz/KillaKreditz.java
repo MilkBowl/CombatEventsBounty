@@ -25,7 +25,7 @@ import org.bukkit.util.config.Configuration;
  *
  */
 public class KillaKreditz extends JavaPlugin {
-    private static final String plugName = "[MobMoney]";
+    private static final String plugName = "[KillaKreditz]";
     public static Map<String, KillaKreditzConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KillaKreditzConfig>());
     private final KillaKreditzWorldLoadEvent worldLoadListener = new KillaKreditzWorldLoadEvent(this);
     
