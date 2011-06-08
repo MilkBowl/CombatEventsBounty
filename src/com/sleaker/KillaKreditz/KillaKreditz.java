@@ -109,6 +109,10 @@ public class KillaKreditz extends JavaPlugin {
     public static void setConfigDefaults (String worldName) {
 
         for (CreatureType creature : CreatureType.values() ) {
+            //Skip these records
+            if (creature == CreatureType.MONSTER)
+                continue;
+            
             wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".minReward", 0.0);
             wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".maxReward", 0.0);
             wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".rewardChance", 0.0);
