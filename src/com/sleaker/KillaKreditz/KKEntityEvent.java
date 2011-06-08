@@ -81,7 +81,7 @@ public class KKEntityEvent extends EntityListener {
                 return;
             else {
                 CreatureType cType = getCType(cEntity);
-                if (!KKPermissions.reward(player, cType.getName())) 
+                if (!KKPermissions.reward(player, cType.getName().toLowerCase())) 
                     return;
                 
                 

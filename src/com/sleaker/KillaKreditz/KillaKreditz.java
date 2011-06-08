@@ -95,7 +95,7 @@ public class KillaKreditz extends JavaPlugin {
             if (creature == CreatureType.MONSTER)
                 continue;
             
-            String cName = creature.name();
+            String cName = creature.name().toLowerCase();
             if (wConfig.getNode(worldName + "." + cName) == null) {
                 wConfig.setProperty(worldName + "." + cName + ".minReward", 0.0);
                 wConfig.setProperty(worldName + "." + cName + ".maxReward", 0.0);
