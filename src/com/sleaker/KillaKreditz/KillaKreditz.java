@@ -20,7 +20,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
-import com.iConomy.iConomy;
 import com.nijiko.permissions.PermissionHandler;
 
 /**
@@ -34,7 +33,6 @@ public class KillaKreditz extends JavaPlugin {
     private final KKEntityEvent entityListener = new KKEntityEvent(this);
     public static double altMultipliers[] = new double[3];
     public static Logger log = Logger.getLogger("Minecraft");
-    public iConomy iConomy = null;
     public PermissionHandler Permissions = null;
     //Handles the per-world Settings
     static Configuration wConfig;
@@ -75,7 +73,7 @@ public class KillaKreditz extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Monitor, this);
         //Load up our permissions
         KKPermissions.initialize(getServer());  
-        
+        KKKreditzHandler.initialize(getServer());
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
         

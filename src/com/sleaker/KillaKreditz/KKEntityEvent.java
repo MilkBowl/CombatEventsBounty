@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityListener;
  */
 public class KKEntityEvent extends EntityListener {
     public Map<LivingEntity, Player> entityMap = new HashMap<LivingEntity, Player>();
+    @SuppressWarnings("unused")
     private KillaKreditz plugin;
     
     KKEntityEvent(KillaKreditz plugin) {
@@ -30,7 +31,7 @@ public class KKEntityEvent extends EntityListener {
     
     public void onEntityDamage(EntityDamageEvent event) {
         //Reasons to disregard this event
-        if (event.isCancelled() || !isValidEntity(event.getEntity()) || plugin.iConomy == null)
+        if (event.isCancelled() || !isValidEntity(event.getEntity()) || KKKreditzHandler.isValidHandler() )
             return;
         
         LivingEntity cEntity = (LivingEntity) event.getEntity();
@@ -52,7 +53,7 @@ public class KKEntityEvent extends EntityListener {
     
     public void onEntityDeath (EntityDeathEvent event) {
         //Reasons to disregard this event
-        if (plugin.iConomy == null || !isValidEntity(event.getEntity()) )
+        if (KKKreditzHandler.isValidHandler() || !isValidEntity(event.getEntity()) )
             return;
         
         LivingEntity cEntity = (LivingEntity) event.getEntity();
