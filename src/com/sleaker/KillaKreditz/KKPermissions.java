@@ -2,6 +2,8 @@
  * 
  */
 package com.sleaker.KillaKreditz;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import ru.tehkode.permissions.bukkit.*;
@@ -87,18 +89,25 @@ public class KKPermissions {
 
     // Bonus Multiplier Permissions
     public static double multiplier(Player player) {
+        List<Double> multipliers = new ArrayList<Double>(5);
         if (permission(player, "kkreditz.multipler.alt1", true))
-            return KillaKreditz.altMultipliers[0];
+            multipliers.add(KillaKreditz.altMultipliers[0]);
         if (permission(player, "kkreditz.multipler.alt2", true))
-            return KillaKreditz.altMultipliers[1];
+            multipliers.add(KillaKreditz.altMultipliers[1]);
         if (permission(player, "kkreditz.multipler.alt3", true))
-            return KillaKreditz.altMultipliers[2];
+            multipliers.add(KillaKreditz.altMultipliers[2]);
         if (permission(player, "kkreditz.multiplier.triple", true))
-            return 3;
+            multipliers.add(3.0);
         if (permission(player, "kkreditz.multiplier.double", true))
-            return 2;
+            multipliers.add(2.0);
+
+        double highestMultiplier = 1.0;
         
-        return 1.0;
+        for (double multiple : multipliers) {
+            if (multiple > highestMultiplier)
+                highestMultiplier = multiple;
+        }
+        return highestMultiplier;
     }
     
     public static boolean isInvalidHandler() {
