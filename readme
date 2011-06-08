@@ -1,0 +1,23 @@
+KillaKreditz by Sleaker
+
+KillaKreditz is a plugin that rewards players monetarily for killing creatures.
+
+To give your players these rewards you will need to give them the permissions:
+
+This will reward your players for killing any monsters.
+'kkreditz.reward.*'
+
+Alternatively you can reward them for only specific creature types:
+'kkreditz.reward.skeleton'
+'kkreditz.reward.zombie'
+
+You can also give them access to different multipliers (only the highest one will be used)
+'kkreditz.multiplier.triple'
+'kkreditz.multiplier.double'
+'kkreditz.multiplier.alt1'
+'kkreditz.multiplier.alt2'
+'kkreditz.multiplier.alt3'
+
+the alternative multipliers are set in the main configuration file: plugins/KillaKreditz/config.yml
+
+This plugin uses per-world rewards.  This means that you must define each worlds creature rewards explicitly.
