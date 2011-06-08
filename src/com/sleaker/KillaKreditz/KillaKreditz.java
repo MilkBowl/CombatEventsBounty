@@ -15,24 +15,30 @@ import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
+
+import com.iConomy.iConomy;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 /**
  * @author sleaker
  *
  */
 public class KillaKreditz extends JavaPlugin {
-    private static final String plugName = "[KillaKreditz]";
+    static final String plugName = "[KillaKreditz]";
     public static Map<String, KKWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KKWorldConfig>());
     private final KKWorldLoadEvent worldLoadListener = new KKWorldLoadEvent(this);
     
     public static Logger log = Logger.getLogger("Minecraft");
-
+    public iConomy iConomy = null;
+    public PermissionHandler Permissions = null;
     static Configuration config;
-
+    
     @Override
     public void onDisable() {
 
@@ -67,9 +73,14 @@ public class KillaKreditz extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
         
+        //Load up our permissions
+        KKPermissions.initialize(getServer());  
         
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
+        
+
+            
     }
 
     public static void setupWorld (String worldName) {
