@@ -64,10 +64,10 @@ public class KKKreditzHandler {
             return amount+"";
     }
     
-    public static boolean isValidHandler() {
+    public static boolean isInvalidHandler() {
         if (handler == EconomyHandler.NONE)
-            return false;
-        else
             return true;
+        else
+            return false;
     }
 }

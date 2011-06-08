@@ -71,13 +71,14 @@ public class KillaKreditz extends JavaPlugin {
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Monitor, this);
+        
         //Load up our permissions
         KKPermissions.initialize(getServer());  
         KKKreditzHandler.initialize(getServer());
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
         
-        if ( !KKKreditzHandler.isValidHandler() || !KKPermissions.isValidHandler() )
+        if ( KKKreditzHandler.isInvalidHandler() || KKPermissions.isInvalidHandler() )
             getPluginLoader().disablePlugin(this);    
     }
 

@@ -6,6 +6,7 @@ package com.sleaker.KillaKreditz;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
@@ -39,6 +40,7 @@ public class KKEntityEvent extends EntityListener {
     public Map<LivingEntity, Player> entityMap = new HashMap<LivingEntity, Player>();
     @SuppressWarnings("unused")
     private KillaKreditz plugin;
+    public static Logger log = Logger.getLogger("Minecraft");
     
     KKEntityEvent(KillaKreditz plugin) {
         this.plugin = plugin;
@@ -46,7 +48,7 @@ public class KKEntityEvent extends EntityListener {
     
     public void onEntityDamage(EntityDamageEvent event) {
         //Reasons to disregard this event
-        if (event.isCancelled() || !isValidEntity(event.getEntity()) || KKKreditzHandler.isValidHandler() )
+        if (event.isCancelled() || !isValidEntity(event.getEntity()) )
             return;
         
         LivingEntity cEntity = (LivingEntity) event.getEntity();
@@ -68,7 +70,7 @@ public class KKEntityEvent extends EntityListener {
     
     public void onEntityDeath (EntityDeathEvent event) {
         //Reasons to disregard this event
-        if (KKKreditzHandler.isValidHandler() || !isValidEntity(event.getEntity()) )
+        if ( !isValidEntity(event.getEntity()) )
             return;
         
         LivingEntity cEntity = (LivingEntity) event.getEntity();

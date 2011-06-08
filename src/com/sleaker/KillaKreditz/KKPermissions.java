@@ -101,11 +101,11 @@ public class KKPermissions {
         return 1.0;
     }
     
-    public static boolean isValidHandler() {
+    public static boolean isInvalidHandler() {
         if (handler == PermissionsHandler.NONE)
-            return false;
-        else
             return true;
+        else
+            return false;
     }
     
 }
