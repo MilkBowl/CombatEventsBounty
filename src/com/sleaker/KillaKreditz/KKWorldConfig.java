@@ -12,10 +12,10 @@ import org.bukkit.entity.CreatureType;
  * @author sleaker
  *
  */
-public class KillaKreditzConfig {
+public class KKWorldConfig {
     private Map<CreatureType, double[]> creatureMap = new HashMap<CreatureType, double[]>();
     
-    KillaKreditzConfig() {
+    KKWorldConfig() {
         creatureMap.put(CreatureType.CHICKEN, new double[] {0.0, 0.0, 0.0});
         creatureMap.put(CreatureType.COW, new double[] {0.0, 0.0, 0.0});
         creatureMap.put(CreatureType.CREEPER, new double[] {0.0, 0.0, 0.0});

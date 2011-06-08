@@ -26,8 +26,8 @@ import org.bukkit.util.config.Configuration;
  */
 public class KillaKreditz extends JavaPlugin {
     private static final String plugName = "[KillaKreditz]";
-    public static Map<String, KillaKreditzConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KillaKreditzConfig>());
-    private final KillaKreditzWorldLoadEvent worldLoadListener = new KillaKreditzWorldLoadEvent(this);
+    public static Map<String, KKWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KKWorldConfig>());
+    private final KKWorldLoadEvent worldLoadListener = new KKWorldLoadEvent(this);
     
     public static Logger log = Logger.getLogger("Minecraft");
 
@@ -74,13 +74,13 @@ public class KillaKreditz extends JavaPlugin {
 
     public static void setupWorld (String worldName) {
 
-        worldConfig.put(worldName, new KillaKreditzConfig());
+        worldConfig.put(worldName, new KKWorldConfig());
         if ( !config.getKeys(null).contains(worldName) ) {  
             setConfigDefaults(worldName);
             log.info(plugName + " " + worldName + " - Generating defaults.");   
         }        
 
-        KillaKreditzConfig conf = worldConfig.get(worldName);
+        KKWorldConfig conf = worldConfig.get(worldName);
 
         for (CreatureType creature : CreatureType.values() ) {
             String cName = creature.name();

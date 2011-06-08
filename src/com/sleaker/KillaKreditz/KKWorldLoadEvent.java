@@ -11,11 +11,11 @@ import org.bukkit.event.world.WorldLoadEvent;
  *
  * Detects when a new world is loaded in and runs the configuration loader for the world.
  */
-public class KillaKreditzWorldLoadEvent extends WorldListener {
+public class KKWorldLoadEvent extends WorldListener {
 
     public final KillaKreditz plugin;
 
-    public KillaKreditzWorldLoadEvent(KillaKreditz instance) {
+    public KKWorldLoadEvent(KillaKreditz instance) {
         plugin = instance;
     }
 
