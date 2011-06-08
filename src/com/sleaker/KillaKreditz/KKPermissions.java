@@ -74,13 +74,13 @@ public class KKPermissions {
 
     // Admin Permissions 
     // In case we need administrator permissions for anything
-    public static boolean adminReloadConfig(Player player) {
+    public static boolean admin(Player player) {
         return permission(player, "kkreditz.admin", player.isOp());
     }
 
     // User permissions
     // Checks if a player will be rewarded for killing a specific monster.
-    public static boolean home(Player player, String cName) {
+    public static boolean reward(Player player, String cName) {
         return permission(player, "kkreditz.reward."+cName, true);
     }
 

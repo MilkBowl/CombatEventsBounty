@@ -72,6 +72,7 @@ public class KKEntityEvent extends EntityListener {
             return;
         
         LivingEntity cEntity = (LivingEntity) event.getEntity();
+        
         //Reward the player if the entity map for this creature exists
         if ( entityMap.containsKey(cEntity) ) {
             //Remove the mapping since we will be rewarding the player.
@@ -79,8 +80,12 @@ public class KKEntityEvent extends EntityListener {
             if (player == null)
                 return;
             else {
-                KKWorldConfig conf = KillaKreditz.worldConfig.get(player.getWorld().getName());
                 CreatureType cType = getCType(cEntity);
+                if (!KKPermissions.reward(player, cType.getName())) 
+                    return;
+                
+                
+                KKWorldConfig conf = KillaKreditz.worldConfig.get(player.getWorld().getName());
                 if (conf.get(cType) == null) 
                     return;
                 else {
