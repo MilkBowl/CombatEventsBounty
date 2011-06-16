@@ -59,7 +59,6 @@ public class KillaKreditz extends JavaPlugin {
         wConfig = new Configuration(worldsYml);
         wConfig.load();
         mConfig = getConfiguration();
-        setupMultipliers();
         
         List<World> worlds = getServer().getWorlds();
 
@@ -134,7 +133,7 @@ public class KillaKreditz extends JavaPlugin {
 
         for (CreatureType creature : CreatureType.values() ) {
             //Skip these records
-            if (creature == CreatureType.MONSTER)
+            if (creature == CreatureType.MONSTER )
                 continue;
             
             wConfig.setProperty(worldName + "." + creature.getName().toLowerCase() + ".minReward", 0.0);
@@ -155,24 +154,5 @@ public class KillaKreditz extends JavaPlugin {
                 log.info(plugName + " - Cannot create configuration file. And none to load check your folder permission!");
             }
         }   
-    }
-    
-    private void setupMultipliers() {
-        if (mConfig.getNode("alt1") == null)
-            mConfig.setProperty("alt1", (double) 1.0);
-        
-        if (mConfig.getNode("alt2") == null)
-            mConfig.setProperty("alt2", (double) 1.0);
-        
-        if (mConfig.getNode("alt3") == null)
-            mConfig.setProperty("alt3", (double) 1.0);
-        
-        mConfig.save();
-        
-        altMultipliers[0] = mConfig.getDouble("alt1", 1.0);
-        altMultipliers[1] = mConfig.getDouble("alt2", 1.0);
-        altMultipliers[2] = mConfig.getDouble("alt3", 1.0);
-        
-        return;
     }
 }

@@ -2,11 +2,11 @@
  * 
  */
 package com.sleaker.KillaKreditz;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.logging.Logger;
 
 import ru.tehkode.permissions.bukkit.*;
+
 import com.nijikokun.bukkit.Permissions.Permissions;
 import org.anjocaido.groupmanager.GroupManager;
 
@@ -88,26 +88,22 @@ public class KKPermissions {
     }
 
     // Bonus Multiplier Permissions
+    @SuppressWarnings({ "static-access", "deprecation" })
     public static double multiplier(Player player) {
-        List<Double> multipliers = new ArrayList<Double>(5);
-        if (permission(player, "kkreditz.multipler.alt1", true))
-            multipliers.add(KillaKreditz.altMultipliers[0]);
-        if (permission(player, "kkreditz.multipler.alt2", true))
-            multipliers.add(KillaKreditz.altMultipliers[1]);
-        if (permission(player, "kkreditz.multipler.alt3", true))
-            multipliers.add(KillaKreditz.altMultipliers[2]);
-        if (permission(player, "kkreditz.multiplier.triple", true))
-            multipliers.add(3.0);
-        if (permission(player, "kkreditz.multiplier.double", true))
-            multipliers.add(2.0);
-
-        double highestMultiplier = 1.0;
-        
-        for (double multiple : multipliers) {
-            if (multiple > highestMultiplier)
-                highestMultiplier = multiple;
+        switch (handler) {
+        case PERMISSIONSEX:
+            return ((PermissionsEx) permissionPlugin).getPermissionManager().getUser(player.getName()).getOptionInteger("kkmultiplier", player.getWorld().getName(), 1);
+        case PERMISSIONS3:
+            return ((Permissions) permissionPlugin).getHandler().getPermissionInteger(player.getWorld().getName(), player.getName(), "kkmultiplier");
+        case PERMISSIONS:
+            return ((Permissions) permissionPlugin).getHandler().getPermissionInteger(player.getWorld().getName(), player.getName(), "kkmultiplier");
+        case GROUPMANAGER:
+            return ((GroupManager) permissionPlugin).getPermissionHandler().getUserPermissionDouble(player.getName(), "kkmultipler");
+        case NONE:
+            return 1.0;
+        default:
+            return 1.0;
         }
-        return highestMultiplier;
     }
     
     public static boolean isInvalidHandler() {
