@@ -20,8 +20,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
-import com.nijiko.permissions.PermissionHandler;
-
 /**
  * @author sleaker
  *
@@ -33,7 +31,7 @@ public class KillaKreditz extends JavaPlugin {
     private final KKEntityEvent entityListener = new KKEntityEvent(this);
     public static double altMultipliers[] = new double[3];
     public static Logger log = Logger.getLogger("Minecraft");
-    public PermissionHandler Permissions = null;
+
     //Handles the per-world Settings
     static Configuration wConfig;
     //Handles the server-wide Settings
