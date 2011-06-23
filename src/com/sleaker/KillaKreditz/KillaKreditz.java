@@ -11,10 +11,14 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import net.milkbowl.administrate.AdminHandler;
+import net.milkbowl.administrate.Administrate;
+
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +30,7 @@ import org.bukkit.util.config.Configuration;
  */
 public class KillaKreditz extends JavaPlugin {
     static final String plugName = "[KillaKreditz]";
+    public AdminHandler admins = null;
     public static Map<String, KKWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, KKWorldConfig>());
     private final KKWorldLoadEvent worldLoadListener = new KKWorldLoadEvent(this);
     private final KKEntityEvent entityListener = new KKEntityEvent(this);
@@ -74,6 +79,8 @@ public class KillaKreditz extends JavaPlugin {
         KKKreditzHandler.initialize(getServer());
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
+        
+        setupOptionals();
         
         if ( KKKreditzHandler.isInvalidHandler() || KKPermissions.isInvalidHandler() )
             getPluginLoader().disablePlugin(this);    
@@ -152,5 +159,18 @@ public class KillaKreditz extends JavaPlugin {
                 log.info(plugName + " - Cannot create configuration file. And none to load check your folder permission!");
             }
         }   
+    }
+    
+    private void setupOptionals() {
+		if (admins == null) {
+            Plugin admin = this.getServer().getPluginManager().getPlugin("Administrate");
+            if (admin != null) {
+                if (!this.getServer().getPluginManager().isPluginEnabled("Administrate")){
+                    this.getServer().getPluginManager().enablePlugin(admin);
+                }
+                admins = ((Administrate) admin).getAdminHandler();
+                log.info(plugName + " - Successfully hooked into Administrate v" + admin.getDescription().getVersion());
+            }
+        } 
     }
 }
