@@ -57,11 +57,10 @@ public class KKPermissions {
         }
     }
 
-    @SuppressWarnings("static-access")
     public static boolean permission(Player player, String permission, boolean defaultPerm) {
         switch (handler) {
         case PERMISSIONSEX:
-            return ((PermissionsEx) permissionPlugin).getPermissionManager().has(player, permission);
+            return PermissionsEx.getPermissionManager().has(player, permission);
         case PERMISSIONS3:
             return ((Permissions) permissionPlugin).getHandler().has(player, permission);
         case PERMISSIONS:
@@ -88,11 +87,11 @@ public class KKPermissions {
     }
 
     // Bonus Multiplier Permissions
-    @SuppressWarnings({ "static-access", "deprecation" })
+    @SuppressWarnings({ "deprecation" })
     public static double multiplier(Player player) {
         switch (handler) {
         case PERMISSIONSEX:
-            return ((PermissionsEx) permissionPlugin).getPermissionManager().getUser(player.getName()).getOptionInteger("kkmultiplier", player.getWorld().getName(), 1);
+            return PermissionsEx.getPermissionManager().getUser(player.getName()).getOptionInteger("kkmultiplier", player.getWorld().getName(), 1);
         case PERMISSIONS3:
             return ((Permissions) permissionPlugin).getHandler().getPermissionInteger(player.getWorld().getName(), player.getName(), "kkmultiplier");
         case PERMISSIONS:
