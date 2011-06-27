@@ -21,7 +21,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
-import com.sleaker.combatevents.CombatEvents;
+import com.sleaker.combatevents.CombatEventsCore;
+
 
 /**
  * @author sleaker
@@ -30,7 +31,7 @@ import com.sleaker.combatevents.CombatEvents;
 public class CombatEventsLoot extends JavaPlugin {
     static final String plugName = "[CombatEventsLoot]";
     public static Map<String, LootWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, LootWorldConfig>());
-    private CombatEvents ceCore = null;
+    private CombatEventsCore ceCore = null;
     
     private final LootWorldLoadEvent worldLoadListener = new LootWorldLoadEvent(this);
     private final LootEvent customListener = new LootEvent();
@@ -166,7 +167,7 @@ public class CombatEventsLoot extends JavaPlugin {
 		if (ceCore == null) {
             Plugin ceCore = this.getServer().getPluginManager().getPlugin("CombatEventsCore");
             if (ceCore != null) {
-                this.ceCore = ((CombatEvents) ceCore);
+                this.ceCore = ((CombatEventsCore) ceCore);
                 log.info(plugName + " - Successfully hooked into Administrate v" + ceCore.getDescription().getVersion());
             }
         } 
