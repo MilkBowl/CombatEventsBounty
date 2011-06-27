@@ -168,7 +168,7 @@ public class CombatEventsLoot extends JavaPlugin {
             Plugin ceCore = this.getServer().getPluginManager().getPlugin("CombatEventsCore");
             if (ceCore != null) {
                 this.ceCore = ((CombatEventsCore) ceCore);
-                log.info(plugName + " - Successfully hooked into Administrate v" + ceCore.getDescription().getVersion());
+                log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
     }
