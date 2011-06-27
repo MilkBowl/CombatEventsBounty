@@ -1,5 +1,5 @@
-name: KillaKreditz
-main: com.sleaker.KillaKreditz.KillaKreditz
+name: CombatEventsLoot
+main: com.sleaker.combatevents.loot.CombatEventsLoot
 version: 1.0
 author: Sleaker
 description: >
