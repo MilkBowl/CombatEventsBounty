@@ -75,8 +75,6 @@ public class CombatEventsLoot extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.CUSTOM_EVENT, customListener, Priority.Monitor, this);
-        pm.registerEvent(Event.Type.ENTITY_DAMAGE, customListener, Priority.Monitor, this);
-        pm.registerEvent(Event.Type.ENTITY_DEATH, customListener, Priority.Monitor, this);
         
         //Load up our permissions
         LootPermissions.initialize(getServer());  
