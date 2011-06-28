@@ -4,8 +4,6 @@
 package com.sleaker.combatevents.loot;
 
 import java.util.Random;
-import java.util.logging.Logger;
-
 import com.sleaker.combatevents.EntityKilledByEntityEvent;
 
 import org.bukkit.ChatColor;
@@ -28,16 +26,15 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
 
 /**
  * @author sleaker
  *
  */
-public class LootEvent extends CustomEventListener {
+public class LootListener extends CustomEventListener implements Listener {
 
-	public static Logger log = Logger.getLogger("Minecraft");
-
-	LootEvent() {
+	LootListener() {
 	}
 
 	public void onCustomEvent(Event event) {

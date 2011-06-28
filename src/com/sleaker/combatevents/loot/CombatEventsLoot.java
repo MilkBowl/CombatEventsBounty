@@ -34,7 +34,7 @@ public class CombatEventsLoot extends JavaPlugin {
     private CombatEventsCore ceCore = null;
     
     private final LootWorldLoadEvent worldLoadListener = new LootWorldLoadEvent(this);
-    private final LootEvent customListener = new LootEvent();
+    private final LootListener customListener = new LootListener();
 
     public static Logger log = Logger.getLogger("Minecraft");
 
