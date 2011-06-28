@@ -4,6 +4,8 @@
 package com.sleaker.combatevents.loot;
 
 import java.util.Random;
+import java.util.logging.Logger;
+
 import com.sleaker.combatevents.EntityKilledByEntityEvent;
 
 import org.bukkit.ChatColor;
@@ -33,7 +35,7 @@ import org.bukkit.event.Listener;
  *
  */
 public class LootListener extends CustomEventListener implements Listener {
-
+    public static Logger log = Logger.getLogger("Minecraft");
 	LootListener() {
 	}
 
@@ -66,6 +68,7 @@ public class LootListener extends CustomEventListener implements Listener {
 			return;
 		else {
 			//Get the reward amount & multiply it out
+			log.info("[CombatEventsLoot] - Multiplier: " + LootPermissions.multiplier(player));
 			double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * LootPermissions.multiplier(player);
 			if (reward == 0)
 				return;

@@ -86,11 +86,16 @@ public class LootPermissions {
     public static double multiplier(Player player) {
         switch (handler) {
         case PERMISSIONSEX:
-            return PermissionsEx.getPermissionManager().getUser(player.getName()).getOptionInteger("cemultiplier", player.getWorld().getName(), 1);
-        case PERMISSIONS3:
-            return ((Permissions) permissionPlugin).getHandler().getPermissionInteger(player.getWorld().getName(), player.getName(), "cemultiplier");
-        case PERMISSIONS:
-            return ((Permissions) permissionPlugin).getHandler().getPermissionInteger(player.getWorld().getName(), player.getName(), "cemultiplier");
+            return PermissionsEx.getPermissionManager().getUser(player.getName()).getOptionDouble("cemultiplier", player.getWorld().getName(), 1);
+        case PERMISSIONS3: {
+        	try {
+        		return Double.parseDouble(((Permissions) permissionPlugin).getHandler().getPermissionString(player.getWorld().getName(), player.getName(), "cemultiplier"));
+        	} catch (Exception e) {
+        		return 1.0;
+        	}
+        }
+        case PERMISSIONS: 
+            return ((Permissions) permissionPlugin).getHandler().getPermissionDouble(player.getWorld().getName(), player.getName(), "cemultiplier");
         case GROUPMANAGER:
             return ((GroupManager) permissionPlugin).getPermissionHandler().getUserPermissionDouble(player.getName(), "cemultipler");
         case NONE:
