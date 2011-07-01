@@ -48,7 +48,7 @@ public class CombatListener extends CombatEventsListener {
 	}
 	
 	private void doReward(Player player, CreatureType cType) {
-		LootWorldConfig conf = CombatEventsBounty.worldConfig.get(player.getWorld().getName());
+		BountyWorldConfig conf = CombatEventsBounty.worldConfig.get(player.getWorld().getName());
 		if (conf.get(cType) == null) 
 			return;
 		else {

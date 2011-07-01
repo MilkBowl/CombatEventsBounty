@@ -34,12 +34,12 @@ import net.milkbowl.vault.permission.Permission;
  */
 public class CombatEventsBounty extends JavaPlugin {
     static final String plugName = "[CombatEventsLoot]";
-    public static Map<String, LootWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, LootWorldConfig>());
+    public static Map<String, BountyWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, BountyWorldConfig>());
     private CombatEventsCore ceCore = null;
     public static Permission perms = null;
     public static Economy econ = null;
     
-    private final LootWorldLoadEvent worldLoadListener = new LootWorldLoadEvent(this);
+    private final BountyWorldLoadEvent worldLoadListener = new BountyWorldLoadEvent(this);
     private CombatEventsListener combatListener;
     
     public static Logger log = Logger.getLogger("Minecraft");
@@ -91,13 +91,13 @@ public class CombatEventsBounty extends JavaPlugin {
 
     public static void setupWorld (String worldName) {
 
-        worldConfig.put(worldName, new LootWorldConfig());
+        worldConfig.put(worldName, new BountyWorldConfig());
         if ( !wConfig.getKeys(null).contains(worldName) ) {  
             setConfigDefaults(worldName);
             log.info(plugName + " " + worldName + " - Generating defaults.");   
         }        
 
-        LootWorldConfig conf = worldConfig.get(worldName);
+        BountyWorldConfig conf = worldConfig.get(worldName);
 
         for (CreatureType creature : CreatureType.values() ) {
             if (creature == CreatureType.MONSTER)

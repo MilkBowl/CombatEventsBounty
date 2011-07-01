@@ -12,10 +12,10 @@ import org.bukkit.entity.CreatureType;
  * @author sleaker
  *
  */
-public class LootWorldConfig {
+public class BountyWorldConfig {
     private Map<CreatureType, double[]> creatureMap = new HashMap<CreatureType, double[]>();
     
-    LootWorldConfig() {
+    BountyWorldConfig() {
         creatureMap.put(CreatureType.CHICKEN, new double[] {0.0, 0.0, 0.0});
         creatureMap.put(CreatureType.COW, new double[] {0.0, 0.0, 0.0});
         creatureMap.put(CreatureType.CREEPER, new double[] {0.0, 0.0, 0.0});

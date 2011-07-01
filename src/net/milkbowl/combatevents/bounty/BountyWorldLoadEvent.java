@@ -11,11 +11,11 @@ import org.bukkit.event.world.WorldLoadEvent;
  *
  * Detects when a new world is loaded in and runs the configuration loader for the world.
  */
-public class LootWorldLoadEvent extends WorldListener {
+public class BountyWorldLoadEvent extends WorldListener {
 
     public final CombatEventsBounty plugin;
 
-    public LootWorldLoadEvent(CombatEventsBounty instance) {
+    public BountyWorldLoadEvent(CombatEventsBounty instance) {
         plugin = instance;
     }
 
