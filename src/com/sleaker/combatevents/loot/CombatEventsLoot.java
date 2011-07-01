@@ -22,6 +22,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import com.sleaker.combatevents.CombatEventsCore;
+import com.sleaker.combatevents.CombatEventsListener;
 
 
 /**
@@ -34,8 +35,8 @@ public class CombatEventsLoot extends JavaPlugin {
     private CombatEventsCore ceCore = null;
     
     private final LootWorldLoadEvent worldLoadListener = new LootWorldLoadEvent(this);
-    private final LootListener customListener = new LootListener();
-
+    private CombatEventsListener combatListener;
+    
     public static Logger log = Logger.getLogger("Minecraft");
 
     //Handles the per-world Settings
@@ -74,7 +75,7 @@ public class CombatEventsLoot extends JavaPlugin {
         //Create the pluginmanager pm and instantiate our listeners
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
-        pm.registerEvent(Event.Type.CUSTOM_EVENT, customListener, Priority.Monitor, this);
+        pm.registerEvent(Event.Type.CUSTOM_EVENT, combatListener, Priority.Monitor, this);
         
         //Load up our permissions
         LootPermissions.initialize(getServer());  
@@ -166,6 +167,7 @@ public class CombatEventsLoot extends JavaPlugin {
             Plugin ceCore = this.getServer().getPluginManager().getPlugin("CombatEventsCore");
             if (ceCore != null) {
                 this.ceCore = ((CombatEventsCore) ceCore);
+                combatListener = new CombatEventsListener();
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
