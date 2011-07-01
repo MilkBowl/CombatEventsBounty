@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sleaker.combatevents.loot;
+package net.milkbowl.combatevents.bounty;
 
 import java.util.HashMap;
 import java.util.Map;

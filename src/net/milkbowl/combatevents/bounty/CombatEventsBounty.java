@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sleaker.combatevents.loot;
+package net.milkbowl.combatevents.bounty;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,18 +21,23 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
-import com.sleaker.combatevents.CombatEventsCore;
-import com.sleaker.combatevents.CombatEventsListener;
+import net.milkbowl.combatevents.CombatEventsCore;
+import net.milkbowl.combatevents.CombatEventsListener;
+import net.milkbowl.vault.Vault;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 
 
 /**
  * @author sleaker
  *
  */
-public class CombatEventsLoot extends JavaPlugin {
+public class CombatEventsBounty extends JavaPlugin {
     static final String plugName = "[CombatEventsLoot]";
     public static Map<String, LootWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, LootWorldConfig>());
     private CombatEventsCore ceCore = null;
+    public static Permission perms = null;
+    public static Economy econ = null;
     
     private final LootWorldLoadEvent worldLoadListener = new LootWorldLoadEvent(this);
     private CombatEventsListener combatListener;
@@ -61,7 +66,9 @@ public class CombatEventsLoot extends JavaPlugin {
         setupFile(worldsYml);
         setupFile(mainYml);
         
-        setupDependencies();
+        //If we can't load our dependencies then disable the plugin.
+        if (!setupDependencies())
+        	this.getServer().getPluginManager().disablePlugin(this);
         
         wConfig = new Configuration(worldsYml);
         wConfig.load();
@@ -77,14 +84,9 @@ public class CombatEventsLoot extends JavaPlugin {
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.CUSTOM_EVENT, combatListener, Priority.Monitor, this);
         
-        //Load up our permissions
-        LootPermissions.initialize(getServer());  
-        LootEconHandler.initialize(getServer());
         //Print that the plugin was successfully enabled!
         log.info(plugName + " - " + pdfFile.getVersion() + " by Sleaker is enabled!");
         
-        if ( LootEconHandler.isInvalidHandler() || LootPermissions.isInvalidHandler() )
-            getPluginLoader().disablePlugin(this);    
     }
 
     public static void setupWorld (String worldName) {
@@ -162,7 +164,7 @@ public class CombatEventsLoot extends JavaPlugin {
         }   
     }
     
-    private void setupDependencies() {
+    private boolean setupDependencies() {
 		if (ceCore == null) {
             Plugin ceCore = this.getServer().getPluginManager().getPlugin("CombatEventsCore");
             if (ceCore != null) {
@@ -171,5 +173,16 @@ public class CombatEventsLoot extends JavaPlugin {
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
+		if (CombatEventsBounty.econ == null || CombatEventsBounty.perms == null) {
+			Plugin VAULT = this.getServer().getPluginManager().getPlugin("Vault");
+			if (VAULT != null) {
+				CombatEventsBounty.econ = ((Vault) VAULT).getEconomy();
+				CombatEventsBounty.perms = ((Vault) VAULT).getPermission();
+			}
+		}
+		if (CombatEventsBounty.perms == null || CombatEventsBounty.econ == null || ceCore == null)
+			return false;
+		else
+			return true;
     }
 }

@@ -1,4 +1,4 @@
-package com.sleaker.combatevents.loot;
+package net.milkbowl.combatevents.bounty;
 
 import java.util.Random;
 
@@ -21,8 +21,8 @@ import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 
-import com.sleaker.combatevents.CombatEventsListener;
-import com.sleaker.combatevents.events.EntityKilledByEntityEvent;
+import net.milkbowl.combatevents.CombatEventsListener;
+import net.milkbowl.combatevents.events.EntityKilledByEntityEvent;
 
 public class CombatListener extends CombatEventsListener {
 	
@@ -32,7 +32,7 @@ public class CombatListener extends CombatEventsListener {
 			Player player = (Player) event.getAttacker();
 			CreatureType cType = getCType(event.getKilled());
 			//Check if the player has Permission to recieve a reward
-			if (!LootPermissions.reward(player, cType.getName().toLowerCase())) {
+			if (!CombatEventsBounty.perms.playerHasPermission(player, "combatevents.loot."+cType.getName().toLowerCase())) {
 				return;
 			}
 			doReward(player, cType);
@@ -40,7 +40,7 @@ public class CombatListener extends CombatEventsListener {
 		} else if (event.getAttacker() instanceof Tameable) {
 			if (((Tameable) event.getAttacker()).getOwner() instanceof Player) {
 				Player player = (Player) ((Tameable) event.getAttacker()).getOwner();
-				if (LootPermissions.permission(player, "combatevents.petrewards", true) && LootPermissions.reward(player, getCType(event.getKilled()).getName().toLowerCase())) {
+				if (CombatEventsBounty.perms.playerHasPermission(player, "combatevents.petrewards") && CombatEventsBounty.perms.playerHasPermission(player, "combatevents.loot."+getCType(event.getKilled()).getName().toLowerCase())) {
 					doReward(player, getCType(event.getKilled()));
 				}
 			}
@@ -48,17 +48,17 @@ public class CombatListener extends CombatEventsListener {
 	}
 	
 	private void doReward(Player player, CreatureType cType) {
-		LootWorldConfig conf = CombatEventsLoot.worldConfig.get(player.getWorld().getName());
+		LootWorldConfig conf = CombatEventsBounty.worldConfig.get(player.getWorld().getName());
 		if (conf.get(cType) == null) 
 			return;
 		else {
 			//Get the reward amount & multiply it out
-			double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * LootPermissions.multiplier(player);
+			double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * CombatEventsBounty.perms.getPlayerInfoDouble(player.getWorld().getName(), player.getName(), "cemultiplier", 1);
 			if (reward == 0)
 				return;
 			else {
-				LootEconHandler.rewardPlayer(player.getName(), reward);
-				player.sendMessage("You have been awarded " + ChatColor.DARK_GREEN + LootEconHandler.formatCurrency(reward) + ChatColor.WHITE + " for killing a " + ChatColor.DARK_RED + cType.getName() );
+				CombatEventsBounty.econ.depositPlayer(player.getName(), reward);
+				player.sendMessage("You have been awarded " + ChatColor.DARK_GREEN + CombatEventsBounty.econ.format(reward) + ChatColor.WHITE + " for killing a " + ChatColor.DARK_RED + cType.getName() );
 			}
 		}
 	}

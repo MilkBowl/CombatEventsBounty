@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sleaker.combatevents.loot;
+package net.milkbowl.combatevents.bounty;
 
 import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -13,13 +13,13 @@ import org.bukkit.event.world.WorldLoadEvent;
  */
 public class LootWorldLoadEvent extends WorldListener {
 
-    public final CombatEventsLoot plugin;
+    public final CombatEventsBounty plugin;
 
-    public LootWorldLoadEvent(CombatEventsLoot instance) {
+    public LootWorldLoadEvent(CombatEventsBounty instance) {
         plugin = instance;
     }
 
     public void onWorldLoad(WorldLoadEvent event) {
-        CombatEventsLoot.setupWorld(event.getWorld().getName());
+        CombatEventsBounty.setupWorld(event.getWorld().getName());
     }
 }
