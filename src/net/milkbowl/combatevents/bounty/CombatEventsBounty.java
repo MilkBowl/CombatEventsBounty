@@ -50,6 +50,13 @@ public class CombatEventsBounty extends JavaPlugin {
     static Configuration mConfig;
     
     @Override
+    public void onLoad() {
+        //If we can't load our dependencies then disable the plugin.
+        if (!setupDependencies())
+        	this.getServer().getPluginManager().disablePlugin(this);
+    }
+    
+    @Override
     public void onDisable() {
 
         log.info(plugName  + " Disabled");
@@ -65,10 +72,6 @@ public class CombatEventsBounty extends JavaPlugin {
         File mainYml = new File(getDataFolder()+"/config.yml");
         setupFile(worldsYml);
         setupFile(mainYml);
-        
-        //If we can't load our dependencies then disable the plugin.
-        if (!setupDependencies())
-        	this.getServer().getPluginManager().disablePlugin(this);
         
         wConfig = new Configuration(worldsYml);
         wConfig.load();
