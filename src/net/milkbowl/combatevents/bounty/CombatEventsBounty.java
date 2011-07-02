@@ -22,7 +22,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import net.milkbowl.combatevents.CombatEventsCore;
-import net.milkbowl.combatevents.CombatEventsListener;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
