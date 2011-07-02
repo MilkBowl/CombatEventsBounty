@@ -40,7 +40,7 @@ public class CombatEventsBounty extends JavaPlugin {
     public static Economy econ = null;
     
     private final BountyWorldLoadEvent worldLoadListener = new BountyWorldLoadEvent(this);
-    private CombatEventsListener combatListener;
+    private CombatListener combatListener;
     
     public static Logger log = Logger.getLogger("Minecraft");
 
@@ -83,6 +83,7 @@ public class CombatEventsBounty extends JavaPlugin {
             setupWorld(world.getName());  
 
         //Create the pluginmanager pm and instantiate our listeners
+        combatListener = new CombatListener();
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.CUSTOM_EVENT, combatListener, Priority.Monitor, this);
@@ -172,7 +173,6 @@ public class CombatEventsBounty extends JavaPlugin {
             Plugin ceCore = this.getServer().getPluginManager().getPlugin("CombatEventsCore");
             if (ceCore != null) {
                 this.ceCore = ((CombatEventsCore) ceCore);
-                combatListener = new CombatEventsListener();
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
