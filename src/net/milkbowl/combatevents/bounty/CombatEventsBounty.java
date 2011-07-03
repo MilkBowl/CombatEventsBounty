@@ -32,7 +32,7 @@ import net.milkbowl.vault.permission.Permission;
  *
  */
 public class CombatEventsBounty extends JavaPlugin {
-    static final String plugName = "[CombatEventsLoot]";
+    static String plugName;
     public static Map<String, BountyWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, BountyWorldConfig>());
     private CombatEventsCore ceCore = null;
     public static Permission perms = null;
@@ -50,6 +50,7 @@ public class CombatEventsBounty extends JavaPlugin {
     
     @Override
     public void onLoad() {
+    	plugName = "[" + this.getDescription().getName() + "]";
         //If we can't load our dependencies then disable the plugin.
         if (!setupDependencies())
         	this.getServer().getPluginManager().disablePlugin(this);
@@ -57,7 +58,6 @@ public class CombatEventsBounty extends JavaPlugin {
     
     @Override
     public void onDisable() {
-
         log.info(plugName  + " Disabled");
     }
 
