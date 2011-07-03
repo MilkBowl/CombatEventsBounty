@@ -11,6 +11,7 @@ import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Giant;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Pig;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Skeleton;
@@ -90,6 +91,8 @@ public class CombatListener extends CombatEventsListener {
 			return CreatureType.GIANT;
 		else if (cEntity instanceof Pig)
 			return CreatureType.PIG;
+		else if (cEntity instanceof PigZombie)
+			return CreatureType.PIG_ZOMBIE;
 		else if (cEntity instanceof Sheep)
 			return CreatureType.SHEEP;
 		else if (cEntity instanceof Skeleton)
