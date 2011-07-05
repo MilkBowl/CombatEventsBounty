@@ -23,8 +23,6 @@ import org.bukkit.util.config.Configuration;
 
 import net.milkbowl.combatevents.CombatEventsCore;
 import net.milkbowl.vault.Vault;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
 
 
 /**
@@ -35,8 +33,7 @@ public class CombatEventsBounty extends JavaPlugin {
     static String plugName;
     public static Map<String, BountyWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, BountyWorldConfig>());
     private CombatEventsCore ceCore = null;
-    public static Permission perms = null;
-    public static Economy econ = null;
+    public static Vault vault;
     
     private final BountyWorldLoadEvent worldLoadListener = new BountyWorldLoadEvent(this);
     private CombatListener combatListener;
@@ -51,9 +48,6 @@ public class CombatEventsBounty extends JavaPlugin {
     @Override
     public void onLoad() {
     	plugName = "[" + this.getDescription().getName() + "]";
-        //If we can't load our dependencies then disable the plugin.
-        if (!setupDependencies())
-        	this.getServer().getPluginManager().disablePlugin(this);
     }
     
     @Override
@@ -62,10 +56,14 @@ public class CombatEventsBounty extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public void onEnable() {        
         //Get the information from the plugin.yml file.
         PluginDescriptionFile pdfFile = this.getDescription();
-
+        
+        //If we can't load our dependencies then disable the plugin.
+        if (!setupDependencies())
+        	this.getServer().getPluginManager().disablePlugin(this);
+        
         //Check to see if there is a worlds configuration file.
         File worldsYml = new File(getDataFolder()+"/worlds.yml");
         File mainYml = new File(getDataFolder()+"/config.yml");
@@ -175,14 +173,13 @@ public class CombatEventsBounty extends JavaPlugin {
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
-		if (CombatEventsBounty.econ == null || CombatEventsBounty.perms == null) {
+		if (CombatEventsBounty.vault == null) {
 			Plugin VAULT = this.getServer().getPluginManager().getPlugin("Vault");
 			if (VAULT != null) {
-				CombatEventsBounty.econ = ((Vault) VAULT).getEconomy();
-				CombatEventsBounty.perms = ((Vault) VAULT).getPermission();
+				CombatEventsBounty.vault = ((Vault) VAULT);
 			}
 		}
-		if (CombatEventsBounty.perms == null || CombatEventsBounty.econ == null || ceCore == null)
+		if (CombatEventsBounty.vault == null || ceCore == null)
 			return false;
 		else
 			return true;

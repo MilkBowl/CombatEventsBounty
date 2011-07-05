@@ -15,11 +15,15 @@ public class CombatListener extends CombatEventsListener {
 	
 	@Override
 	public void onEntityKilledByEntityEvent(EntityKilledByEntityEvent event) {
+		//We don't handle PvP so exit
+		if (event.getKilled() instanceof Player)
+			return;
+		
 		if (event.getAttacker() instanceof Player) {
 			Player player = (Player) event.getAttacker();
 			CreatureType cType = Utility.getCType(event.getKilled());
 			//Check if the player has Permission to recieve a reward
-			if (!CombatEventsBounty.perms.playerHasPermission(player, "combatevents.loot."+cType.getName().toLowerCase())) {
+			if (!CombatEventsBounty.vault.getPermission().playerHasPermission(player, "combatevents.bounty." + cType.getName().toLowerCase())) {
 				return;
 			}
 			doReward(player, cType);
@@ -27,7 +31,7 @@ public class CombatListener extends CombatEventsListener {
 		} else if (event.getAttacker() instanceof Tameable) {
 			if (((Tameable) event.getAttacker()).getOwner() instanceof Player) {
 				Player player = (Player) ((Tameable) event.getAttacker()).getOwner();
-				if (CombatEventsBounty.perms.playerHasPermission(player, "combatevents.petrewards") && CombatEventsBounty.perms.playerHasPermission(player, "combatevents.loot."+Utility.getCType(event.getKilled()).getName().toLowerCase())) {
+				if (CombatEventsBounty.vault.getPermission().playerHasPermission(player, "combatevents.petrewards") && CombatEventsBounty.vault.getPermission().playerHasPermission(player, "combatevents.loot."+Utility.getCType(event.getKilled()).getName().toLowerCase())) {
 					doReward(player, Utility.getCType(event.getKilled()));
 				}
 			}
@@ -40,12 +44,12 @@ public class CombatListener extends CombatEventsListener {
 			return;
 		else {
 			//Get the reward amount & multiply it out
-			double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * CombatEventsBounty.perms.getPlayerInfoDouble(player.getWorld().getName(), player.getName(), "cemultiplier", 1);
+			double reward = getReward(conf.getMinReward(cType), conf.getMaxReward(cType), conf.getChance(cType) ) * CombatEventsBounty.vault.getPermission().getPlayerInfoDouble(player.getWorld().getName(), player.getName(), "cemultiplier", 1);
 			if (reward == 0)
 				return;
 			else {
-				CombatEventsBounty.econ.depositPlayer(player.getName(), reward);
-				player.sendMessage("You have been awarded " + ChatColor.DARK_GREEN + CombatEventsBounty.econ.format(reward) + ChatColor.WHITE + " for killing a " + ChatColor.DARK_RED + cType.getName() );
+				CombatEventsBounty.vault.getEconomy().depositPlayer(player.getName(), reward);
+				player.sendMessage("You have been awarded " + ChatColor.DARK_GREEN + CombatEventsBounty.vault.getEconomy().format(reward) + ChatColor.WHITE + " for killing a " + ChatColor.DARK_RED + cType.getName() );
 			}
 		}
 	}
