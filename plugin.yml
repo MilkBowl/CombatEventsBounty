@@ -2,7 +2,7 @@ name: CombatEventsBounty
 main: net.milkbowl.combatevents.bounty.CombatEventsBounty
 version: 1.0
 author: Sleaker
-depend: [Vault]
+depend: [Vault, CombatEventsCore]
 description: >
              A plugin that awards players with random
              amounts of money for killing creatures.
