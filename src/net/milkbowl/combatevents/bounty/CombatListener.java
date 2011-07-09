@@ -15,7 +15,7 @@ import net.milkbowl.vault.Vault;
 public class CombatListener extends CombatEventsListener {
 	
 	@Override
-	public void onEntityKilledByEntityEvent(EntityKilledByEntityEvent event) {
+	public void onEntityKilledByEntity(EntityKilledByEntityEvent event) {
 		//We don't handle PvP so exit
 		if (event.getKilled() instanceof Player)
 			return;
