@@ -33,7 +33,7 @@ public class CombatEventsBounty extends JavaPlugin {
     static String plugName;
     public static Map<String, BountyWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, BountyWorldConfig>());
     private CombatEventsCore ceCore = null;
-    public static Vault vault;
+    private Vault vault;
     
     private final BountyWorldLoadEvent worldLoadListener = new BountyWorldLoadEvent(this);
     private CombatListener combatListener;
@@ -173,13 +173,13 @@ public class CombatEventsBounty extends JavaPlugin {
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
-		if (CombatEventsBounty.vault == null) {
+		if (this.vault == null) {
 			Plugin VAULT = this.getServer().getPluginManager().getPlugin("Vault");
 			if (VAULT != null) {
-				CombatEventsBounty.vault = ((Vault) VAULT);
+				this.vault = (Vault) VAULT;
 			}
 		}
-		if (CombatEventsBounty.vault == null || ceCore == null)
+		if (this.vault == null || ceCore == null)
 			return false;
 		else
 			return true;

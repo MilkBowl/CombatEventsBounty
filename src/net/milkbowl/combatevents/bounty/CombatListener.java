@@ -7,7 +7,7 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 
-import net.milkbowl.combatevents.CombatEventsListener;
+import net.milkbowl.combatevents.listeners.CombatEventsListener;
 import net.milkbowl.combatevents.events.EntityKilledByEntityEvent;
 import net.milkbowl.combatevents.Utility;
 import net.milkbowl.vault.Vault;
