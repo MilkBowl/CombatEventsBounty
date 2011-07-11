@@ -22,8 +22,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import net.milkbowl.combatevents.CombatEventsCore;
-import net.milkbowl.vault.Vault;
-
 
 /**
  * @author sleaker
@@ -33,7 +31,6 @@ public class CombatEventsBounty extends JavaPlugin {
     static String plugName;
     public static Map<String, BountyWorldConfig> worldConfig = Collections.synchronizedMap(new HashMap<String, BountyWorldConfig>());
     private CombatEventsCore ceCore = null;
-    private Vault vault;
     
     private final BountyWorldLoadEvent worldLoadListener = new BountyWorldLoadEvent(this);
     private CombatListener combatListener;
@@ -173,13 +170,7 @@ public class CombatEventsBounty extends JavaPlugin {
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
-		if (this.vault == null) {
-			Plugin VAULT = this.getServer().getPluginManager().getPlugin("Vault");
-			if (VAULT != null) {
-				this.vault = (Vault) VAULT;
-			}
-		}
-		if (this.vault == null || ceCore == null)
+		if (this.getServer().getPluginManager().getPlugin("Vault") == null || ceCore == null)
 			return false;
 		else
 			return true;
