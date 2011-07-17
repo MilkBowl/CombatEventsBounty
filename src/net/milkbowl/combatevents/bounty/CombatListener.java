@@ -9,15 +9,22 @@ import org.bukkit.entity.Tameable;
 
 import net.milkbowl.combatevents.listeners.CombatEventsListener;
 import net.milkbowl.combatevents.events.EntityKilledByEntityEvent;
+import net.milkbowl.combatevents.KillType;
 import net.milkbowl.combatevents.Utility;
 import net.milkbowl.vault.Vault;
 
 public class CombatListener extends CombatEventsListener {
 	
+	CombatEventsBounty plugin;
+	
+	public CombatListener(CombatEventsBounty plugin) {
+		this.plugin = plugin;
+	}
+	
 	@Override
 	public void onEntityKilledByEntity(EntityKilledByEntityEvent event) {
 		//We don't handle PvP so exit
-		if (event.getKilled() instanceof Player)
+		if (event.getKilled() instanceof Player || (event.getKillType().equals(KillType.CAMPING) && !plugin.isAllowCamping()))
 			return;
 		
 		if (event.getAttacker() instanceof Player) {

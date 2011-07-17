@@ -36,6 +36,7 @@ public class CombatEventsBounty extends JavaPlugin {
     private CombatListener combatListener;
     
     public static Logger log = Logger.getLogger("Minecraft");
+    private boolean allowCamping = false;
 
     //Handles the per-world Settings
     static Configuration wConfig;
@@ -71,13 +72,20 @@ public class CombatEventsBounty extends JavaPlugin {
         wConfig.load();
         mConfig = getConfiguration();
         
+        if (mConfig.getKeys(null).isEmpty()) {
+        	mConfig.setProperty("allow-camping", allowCamping);
+        }
+        
+        allowCamping = mConfig.getBoolean("allow-camping", allowCamping);
+        mConfig.save();
+        
         List<World> worlds = getServer().getWorlds();
 
         for ( World world : worlds)
             setupWorld(world.getName());  
 
         //Create the pluginmanager pm and instantiate our listeners
-        combatListener = new CombatListener();
+        combatListener = new CombatListener(this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.WORLD_LOAD, worldLoadListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.CUSTOM_EVENT, combatListener, Priority.Monitor, this);
@@ -175,4 +183,8 @@ public class CombatEventsBounty extends JavaPlugin {
 		else
 			return true;
     }
+
+	public boolean isAllowCamping() {
+		return allowCamping;
+	}
 }
