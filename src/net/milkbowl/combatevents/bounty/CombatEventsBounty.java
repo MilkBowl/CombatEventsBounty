@@ -5,6 +5,7 @@ package net.milkbowl.combatevents.bounty;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +19,13 @@ import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import net.milkbowl.combatevents.CombatEventsCore;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 
 /**
  * @author sleaker
@@ -42,6 +46,8 @@ public class CombatEventsBounty extends JavaPlugin {
     static Configuration wConfig;
     //Handles the server-wide Settings
     static Configuration mConfig;
+    public static Economy econ;
+    public static Permission perms;
     
     @Override
     public void onLoad() {
@@ -178,7 +184,23 @@ public class CombatEventsBounty extends JavaPlugin {
                 log.info(plugName + " - Successfully hooked " + ceCore.getDescription().getName() + "v" + ceCore.getDescription().getVersion());
             }
         } 
-		if (this.getServer().getPluginManager().getPlugin("Vault") == null || ceCore == null)
+        Collection<RegisteredServiceProvider<Economy>> econs = this.getServer().getServicesManager().getRegistrations(net.milkbowl.vault.economy.Economy.class);
+        for(RegisteredServiceProvider<Economy> econ : econs) {
+            Economy e = econ.getProvider();
+            log.info(String.format("[%s] Found Service (Economy) %s", getDescription().getName(), e.getName()));
+        }
+        Collection<RegisteredServiceProvider<Permission>> perms = this.getServer().getServicesManager().getRegistrations(net.milkbowl.vault.permission.Permission.class);
+        for(RegisteredServiceProvider<Permission> perm : perms) {
+            Permission p = perm.getProvider();
+            log.info(String.format("[%s] Found Service (Permission) %s", getDescription().getName(), p.getName()));
+        }
+        
+        CombatEventsBounty.econ = this.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class).getProvider();
+        log.info(String.format("[%s] Using Economy Provider %s", getDescription().getName(), econ.getName()));
+        CombatEventsBounty.perms = this.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class).getProvider();
+        log.info(String.format("[%s] Using Permission Provider %s", getDescription().getName(), CombatEventsBounty.perms.getName()));
+        
+		if (CombatEventsBounty.perms == null || CombatEventsBounty.econ == null || ceCore == null)
 			return false;
 		else
 			return true;
