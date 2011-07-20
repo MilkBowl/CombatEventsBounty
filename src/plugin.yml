@@ -1,6 +1,6 @@
 name: CombatEventsBounty
 main: net.milkbowl.combatevents.bounty.CombatEventsBounty
-version: 1.0
+version: 1.0-b000
 author: Sleaker
 depend: [Vault, CombatEventsCore]
 description: >

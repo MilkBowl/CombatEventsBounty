@@ -200,10 +200,7 @@ public class CombatEventsBounty extends JavaPlugin {
         CombatEventsBounty.perms = this.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class).getProvider();
         log.info(String.format("[%s] Using Permission Provider %s", getDescription().getName(), CombatEventsBounty.perms.getName()));
         
-		if (CombatEventsBounty.perms == null || CombatEventsBounty.econ == null || ceCore == null)
-			return false;
-		else
-			return true;
+		return (CombatEventsBounty.perms != null && CombatEventsBounty.econ != null && ceCore != null);
     }
 
 	public boolean isAllowCamping() {
