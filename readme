@@ -5,11 +5,14 @@ CombatEventsLoot is a plugin that rewards players with money for killing creatur
 To give your players these rewards you will need to give them the permissions:
 
 This will reward your players for killing any monsters.
-'combatevents.loot.*'
+'combatevents.bounty.*'
+
+Also for pet rewards:
+'combatevents.petrewards'
 
 Alternatively you can reward them for only specific creature types:
-'combatevents.loot.skeleton'
-'combatevents.loot.zombie'
+'combatevents.bounty.skeleton'
+'combatevents.bounty.zombie'
 
 You can also give them access to different multipliers by giving an info node such as:
 cemultiplier: 2
