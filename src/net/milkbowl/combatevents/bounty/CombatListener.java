@@ -38,7 +38,7 @@ public class CombatListener extends CombatEventsListener {
 		} else if (event.getAttacker() instanceof Tameable) {
 			if (((Tameable) event.getAttacker()).getOwner() instanceof Player) {
 				Player player = (Player) ((Tameable) event.getAttacker()).getOwner();
-				if (CombatEventsBounty.perms.has(player, "combatevents.petrewards") && CombatEventsBounty.perms.has(player, "combatevents.loot."+Utility.getCType(event.getKilled()).getName().toLowerCase())) {
+				if (CombatEventsBounty.perms.has(player, "combatevents.petrewards") && CombatEventsBounty.perms.has(player, "combatevents.bounty."+Utility.getCType(event.getKilled()).getName().toLowerCase())) {
 					doReward(player, Utility.getCType(event.getKilled()));
 				}
 			}
